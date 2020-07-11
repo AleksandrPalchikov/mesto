@@ -1,0 +1,24 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts/fonts.css);
+@import url(../blocks/page/__content/page__content.css);
+@import url(../blocks/header/header.css);
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/elements/elements.css);
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/__input/_type_job/popup__input_type_job.css);
+@import url(../blocks/popup/__input/_type_name/popup__input_type_name.css);
+
+.page {
+    font-family: "Inter", "Arial", sans-serif;
+    min-width: 320px;
+    margin: 0 auto;
+    background: #000000;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+}
+  

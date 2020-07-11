@@ -1,0 +1,25 @@
+.elements__like {
+    background-image:
+    url('../../../images/like.png');
+    max-width: 21px;
+    width: 100%;
+    height: 21px;
+    box-sizing: border-box;
+    margin: 0 22px 0;
+    background-color: transparent;
+    border: 1px solid #000000;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    transition: opacity 0.4 ease-in-out;
+    padding: 0px;
+    border: none;
+    }
+    
+    .elements__like:hover {
+      opacity: 0.6;
+    }
+    
+    .elements__like:focus {
+      outline: transparent;
+    }
