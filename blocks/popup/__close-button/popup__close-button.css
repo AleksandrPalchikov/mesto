@@ -1,13 +1,13 @@
 
 .popup__close-button {
     background-image: 
-    url(../../../images/Close-Icon.svg);
+    url(../../../images/close-icon.svg);
     position: absolute;
     box-sizing: border-box;
     width: 40px;
     height: 40px;
     padding: 0;
-    left:100%;
+    right: -10%;
     top: -12%;
     background-color: transparent;
     background-repeat: no-repeat;
@@ -17,18 +17,18 @@
     transition: opacity 0.4 ease-in-out;
     margin: 0;
 }
-  
+/*Мы же обсуждали на первом спринте, что для Safari нужен обязательго top and left. Ок */ 
 .popup__close-button:hover {
-  opacity: 0.6;
+    opacity: 0.6;
 }
   
 .popup__close-button:focus {
-  outline: transparent;
+    outline: transparent;
 }
   
 @media screen and (max-width: 768px) {
     .popup__close-button {
-    left:90%;
-    top: -12%;
-   }
+        left:90%;
+        top: -12%;
+    }
 }

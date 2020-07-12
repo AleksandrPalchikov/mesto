@@ -1,6 +1,5 @@
 .elements__title {
     width: 100%;
-    font-family: Inter;
     font-style: normal;
     font-weight: 900;
     font-size: 24px;
@@ -12,3 +11,5 @@
     overflow: hidden;
     box-sizing: border-box;
   }
+
+  /*Необходимые Шрифты заданы в pge and page__content*/

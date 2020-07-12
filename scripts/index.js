@@ -1,37 +1,37 @@
-const Profile = document.querySelector('.profile');
-const ProfileEditButton = Profile.querySelector('.profile__edit-button');
-const ProfileEddButton = Profile.querySelector('.profile__add-button');
+const profile = document.querySelector('.profile');
+const profileEditButton = profile.querySelector('.profile__edit-button');
+const profileEddButton = profile.querySelector('.profile__add-button');
 
-const Popup = document.querySelector('.popup');
-const PopupContainer = Popup.querySelector('.popup__container');
-const PopupSubmitButton =Popup.querySelector('.popup__submit-button')
-const PopupCloseButton = Popup.querySelector('.popup__close-button');
+const popup = document.querySelector('.popup');
+const popupContainer = popup.querySelector('.popup__container');
+const popupSubmitButton =popup.querySelector('.popup__submit-button')
+const popupCloseButton = popup.querySelector('.popup__close-button');
 
-let InputName = Popup.querySelector('.popup__input_type_name');
-let InputJob = Popup.querySelector('.popup__input_type_job');
-let ProfileName = Profile.querySelector('.profile__title');
-let ProfileJob = Profile.querySelector('.profile__description');
+let inputName = popup.querySelector('.popup__input_type_name');
+let inputJob = popup.querySelector('.popup__input_type_job');
+let profileName = profile.querySelector('.profile__title');
+let profileJob = profile.querySelector('.profile__description');
 
 
-function AddPopup() {
-    Popup.classList.add('popup_opened');
-    InputName.value = ProfileName.textContent;
-    InputJob.value = ProfileJob.textContent;
+function addPopup() {
+    popup.classList.add('popup_opened');
+    inputName.value = profileName.textContent;
+    inputJob.value = profileJob.textContent;
 };
 
-function RemovePopup() {
-    Popup.classList.remove('popup_opened');
-    InputName.value = ProfileName.textContent;
-    InputJob.value = ProfileJob.textContent;
+function removePopup() {
+    popup.classList.remove('popup_opened');
+    inputName.value = profileName.textContent;
+    inputJob.value = profileJob.textContent;
 };
 
 function formSubmitHandler (evt) {
     evt.preventDefault();
-    Popup.classList.remove('popup_opened');
-    ProfileName.textContent = InputName.value;
-    ProfileJob.textContent = InputJob.value;
+    popup.classList.remove('popup_opened');
+    profileName.textContent = inputName.value;
+    profileJob.textContent = inputJob.value;
 };
 
-ProfileEditButton.addEventListener('click', AddPopup); 
-PopupCloseButton.addEventListener('click', RemovePopup);
-PopupContainer.addEventListener('submit', formSubmitHandler);
+profileEditButton.addEventListener('click', addPopup); 
+popupCloseButton.addEventListener('click', removePopup);
+popupContainer.addEventListener('submit', formSubmitHandler);

@@ -13,16 +13,28 @@
     padding: 0;
   }
   
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
+    .elements__list  {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      row-gap: 20px;
+      justify-items: center;
+      justify-content: center;
+      width: 100%;
+  }
+  }
+  
+  @media screen and (max-width: 640px) {
     .elements__list  {
       grid-template-columns: 1fr;
       grid-template-rows: repeat(6, 1fr);
       row-gap: 20px;
       justify-items: center;
+      justify-content: center;
       width: 100%;
   }
   }
-  
+
   @media screen and (max-width: 320px) {
     .elements__list  {
       justify-items: start;

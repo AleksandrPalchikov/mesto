@@ -1,93 +1,91 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="./pages/index.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Место</title>
-</head>
-<body class="page">
-    <div class="page__content">
-        <main>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="./pages/index.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Место</title>
+    </head>
+    <body class="page">
+        <div class="page__content">
             <header class="header">
-                <img class="header__logo" src="./images/logo.svg" alt="лого">
+                <img class="header__logo" src="./images/logo.svg" alt="лого" />
             </header>
-
-            <section class="profile">
-                <img src="images/Avatar.jpg" class="profile__avatar" alt="Кусто">
-                <div class="profile__info-column">
-                    <div class="profile__info-row">
-                        <h1 class="profile__title">Жак-Ив Кусто</h1>
-                        <button  type="button" class="profile__edit-button"></button>
-                    </div>
+            <main>
+                <section class="profile">
+                    <img src="images/Avatar.jpg" class="profile__avatar" alt="кусто" />
+                    <div class="profile__info-column">
+                        <div class="profile__info-row">
+                            <h1 class="profile__title">Жак-Ив Кусто</h1>
+                            <button type="button" class="profile__edit-button"></button>
+                        </div>
                         <p class="profile__description">Исследователь океана</p>
-                </div>
-                <button class="profile__add-button"></button>
-            </section>
+                    </div>
+                    <button type="button" class="profile__add-button"></button>
+                </section>
+                <section class="elements">
+                    <ul class="elements__list">
+                        <li class="elements__element">
+                            <img class="elements__img" src="./images/grand-stone.jpg" alt="карачаевск" />
+                            <div class="elements__description-area">
+                                <h2 class="elements__title">Карачаевск</h2>
+                                <button class="elements__like" aria-label="Лайк" type="button"></button>
+                            </div>
+                        </li>
+                        <li class="elements__element">
+                            <img class="elements__img" src="./images/mountains.jpg" alt="гора эльбрус" />
+                            <div class="elements__description-area">
+                                <h2 class="elements__title">Гора Эльбрус</h2>
+                                <button class="elements__like" aria-label="Лайк" type="button"></button>
+                            </div>
+                        </li>
+                        <li class="elements__element">
+                            <img class="elements__img" src="./images/ox-eye-daisy.jpg" alt="домбай" />
+                            <div class="elements__description-area">
+                                <h2 class="elements__title">Домбай</h2>
+                                <button class="elements__like" aria-label="Лайк" type="button"></button>
+                            </div>
+                        </li>
+                        <li class="elements__element">
+                            <img class="elements__img" src="./images/sunset.jpg" alt="гора эльбрус" />
+                            <div class="elements__description-area">
+                                <h2 class="elements__title">Гора Эльбрус</h2>
+                                <button class="elements__like" aria-label="Лайк" type="button"></button>
+                            </div>
+                        </li>
+                        <li class="elements__element">
+                            <img class="elements__img" src="./images/waterfall.jpg" alt="домбай" />
+                            <div class="elements__description-area">
+                                <h2 class="elements__title">Домбай</h2>
+                                <button class="elements__like" aria-label="Лайк" type="button"></button>
+                            </div>
+                        </li>
+                        <li class="elements__element">
+                            <img class="elements__img" src="./images/yellow-flower.jpg" alt="карачаево-Чeркессия" />
+                            <div class="elements__description-area">
+                                <h2 class="elements__title">Карачаево-Чeркессия</h2>
+                                <button class="elements__like" aria-label="Лайк" type="button"></button>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </main>
 
-            <section class="elements">
-                <ul class="elements__list">
-                    <li class="elements__element">
-                        <img class="elements__img" src="./images/Grand-Stone.jpg" alt="Карачаевск">
-                        <div class="elements__description-area">
-                            <h2 class="elements__title">Карачаевск</h2>
-                            <button class="elements__like" aria-label="Лайк" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="elements__element">
-                        <img class="elements__img" src="./images/mountains.jpg" alt="Гора Эльбрус">
-                        <div class="elements__description-area">
-                            <h2 class="elements__title">Гора Эльбрус</h2>
-                            <button class="elements__like" aria-label="Лайк" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="elements__element">
-                        <img class="elements__img" src="./images/ox-eye-daisy.jpg" alt="Домбай">
-                        <div class="elements__description-area">
-                            <h2 class="elements__title">Домбай</h2>
-                            <button class="elements__like" aria-label="Лайк" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="elements__element">
-                        <img class="elements__img" src="./images/sunset.jpg" alt="Гора Эльбрус">
-                        <div class="elements__description-area">
-                            <h2 class="elements__title">Гора Эльбрус</h2>
-                            <button class="elements__like" aria-label="Лайк" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="elements__element">
-                        <img class="elements__img" src="./images/waterfall.jpg" alt="Домбай">
-                        <div class="elements__description-area">
-                            <h2 class="elements__title">Домбай</h2>
-                            <button class="elements__like" aria-label="Лайк" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="elements__element">
-                        <img class="elements__img" src="./images/Grand-Stone.jpg" alt="Карачаево-Чeркессия">
-                        <div class="elements__description-area">
-                            <h2 class="elements__title">Карачаево-Чeркессия</h2>
-                            <button class="elements__like" aria-label="Лайк" type="button"></button>
-                        </div>
-                    </li>
-                </ul>
-            </section>
-        </main>
-
-        <section class="footer">
-            <p class="footer__copyright">&copy;2020 Mesto Russia</p>
+            <footer class="footer">
+                <p class="footer__copyright">&copy;2020 Mesto Russia</p>
+            </footer>
+        </div>
+        <section class="popup">
+            <form class="popup__container" action="#" method="post" name="edit-profile">
+                <button type="button" class="popup__close-button"></button>
+                <fieldset class="popup__fieldset">
+                    <legend class="popup__title">Редактировать профиль</legend>
+                    <input class="popup__input popup__input_type_name" value="Жак-Ив Кусто" placeholder="Имя" name="name" type="text" autocomplete="on" required />
+                    <input class="popup__input popup__input_type_job" value="Исследователь океана" placeholder="Призвание" name="job" type="text" autocomplete="on" required />
+                </fieldset>
+                <button class="popup__submit-button" type="submit">Cохранить</button>
+            </form>
         </section>
-    </div>
- <section class="popup">
-     <form class="popup__container" action="#">
-        <button type="button" class="popup__close-button"></button>
-            <fieldset class="popup__fieldset">
-                <p class="popup__title">Редактировать профиль</p>
-                <input class=" popup__input popup__input_type_name" value="Жак-Ив Кусто" placeholder="Имя" name="name" type="text" autocomplete="on" required>
-                <input class=" popup__input popup__input_type_job"  value="Исследователь океана" placeholder="Призвание" name="job" type="text" autocomplete="on" required>
-            </fieldset>
-            <input class="popup__submit-button" type="submit" value="Cохранить">
-     </form>
- </section>
- <script src="./scripts/index.js"></script>  
-</body>
+        <script src="./scripts/index.js"></script>
+    </body>
 </html>
