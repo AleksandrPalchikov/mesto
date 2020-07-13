@@ -12,7 +12,6 @@ let inputJob = popup.querySelector('.popup__input_type_job');
 let profileName = profile.querySelector('.profile__title');
 let profileJob = profile.querySelector('.profile__description');
 
-
 function addPopup() {
     popup.classList.add('popup_opened');
     inputName.value = profileName.textContent;

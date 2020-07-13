@@ -1,14 +1,14 @@
 
 .profile__info-row {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-  }
-  
-  @media screen and (max-width: 768px){
-    .profile__info-row  {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+@media screen and (max-width: 768px){
+  .profile__info-row  {
      justify-content: center;
      padding: 0;
      margin: 0;
-      }
-    }
+  }
+}

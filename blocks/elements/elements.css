@@ -6,14 +6,14 @@
 @import url(./__title/elements__title.css);
 
 .elements {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 50px 0 66px;
-    width:100%;
-  }
+  box-sizing: border-box;
+  padding: 0;
+  margin: 50px 0 66px;
+  width:100%;
+}
   
-  @media screen and (max-width: 320px){
-    .elements {
-      margin: 36px 0 48px;
-      }
+@media screen and (max-width: 320px){
+  .elements {
+    margin: 36px 0 48px;
+  }
 }

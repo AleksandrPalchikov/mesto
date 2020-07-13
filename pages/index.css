@@ -2,27 +2,9 @@
 @import url(../vendor/normalize.css);
 @import url(../vendor/fonts/fonts.css);
 @import url(../blocks/page/page.css);
-@import url(../blocks/page/__content/page__content.css);
 @import url(../blocks/header/header.css);
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
-
-/*"Задать веб-безопасный шрифт везде".
-Мы же шрифт можем задать только один раз в page or page__contеnt и больше совсем нигде его не прописывать? Он ж ведь наследуется всеми элементами.
-"У всех интерактивных элементов должен быть эффект наведения (кнопка лайка)."
-Eсть же cursor + transition. */
-
-
-/*"Можно лучше:
-"Функции открытия/закрытия попапа объединить в одну." Toggle? В группе обсуждалось, что не стоит. What I should do in this case?
-"Использовать БЭМ-миксы для описания внешней геометрии и позиционирования."
-О чем речь ? popup_open ? Eсть же.
-"Использовать transition для наведения на интерактивные элементы." Eсть же.
-"Для запрета переноса текста и растягивания текста у имени пользователя и подписи профиля использовать комбинацию свойств: text-overflow: ellipsis;
-white-space: nowrap;
-overflow: hidden;" Eсть же.
-Предусмотреть переполнение контентом, что будет если карточек будет больше или меньше на странице. Например, при уменьшении количества карточек фон всё равно должен тянуться до конца страницы, а футер всегда оставаться внизу экрана.
-Добавить состояние :focus на инпуты, чтобы была индикация в какое именно поле вводятся данные. Eсть же, но стили убраны для эстетики :)" */

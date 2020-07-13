@@ -1,35 +1,35 @@
 
+.page__content {
+  font-family: "Inter", "Arial", sans-serif;
+  max-width: 1280px;
+  min-width: 320px;
+  padding: 0 200px 0; 
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1275px) {
   .page__content {
-    font-family: "Inter", "Arial", sans-serif;
-    max-width: 1280px;
-    min-width: 320px;
-    padding: 0 200px 0; 
-    width: 100%;
-    min-height: 100vh;
-    margin: 0 auto;
-    box-sizing: border-box;
+    padding: 0 calc(30vh / 2) 0;  
   }
+}
 
-  @media screen and (max-width: 1275px) {
-    .page__content {
-      padding: 0 calc(30vh / 2) 0;  
-    }
+@media screen and (max-width: 1024px) {
+  .page__content {
+    padding: 0 calc(10vh / 2) 0;  
   }
+}
 
-  @media screen and (max-width: 1024px) {
-    .page__content {
-      padding: 0 calc(10vh / 2) 0;  
-    }
+@media screen and (max-width: 768px) {
+  .page__content {
+    padding: 0 20px 0;
   }
-
-  @media screen and (max-width: 768px) {
-    .page__content {
-      padding: 0 20px 0;
-    }
-  }
+}
   
-  @media screen and (max-width: 320px) {
-    .page__content {
-      padding: 0 20px 0;
-    }
+@media screen and (max-width: 320px) {
+  .page__content {
+    padding: 0 20px 0;
   }
+}

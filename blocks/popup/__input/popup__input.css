@@ -1,21 +1,25 @@
 .popup__input {
-    margin: 0 0px 30px;
-    padding: 0 0 10px; 
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 17px;
-    color: #000000; 
-    border: none;
-    max-width: 358px;
-    width: 100%;
-    border-bottom: 1px solid #00000020;
-  }
-  /*В чем тут вопрос? Последние 2 цифры (аналог opacity for rgb) указывают прозрачность в %*/
-
+  margin: 0 0px 30px;
+  padding: 0 0 10px; 
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000; 
+  border: none;
+  max-width: 358px;
+  width: 100%;
+  border-bottom: 1px solid #00000020;
+  --focus: 2px rgba(39, 94, 254, .25);
+  outline: none;
+  transition: box-shadow .1s;
+}
 
 .popup__input:focus,
-.popup__input:hover,
+.popup__input:hover,{
+  outline: transparent;
+}
+
 .popup__input:active {
-    outline: transparent;
+  box-shadow: 0 0 0 var(--focus);
 }
