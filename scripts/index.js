@@ -165,6 +165,8 @@ popupCloseBigImgButton.addEventListener('click', () => {
   anyToggleWindow(popupOpenBigImg);
 });
 
+//#ЯПЛАКАЛЬ
+
 
 
 
