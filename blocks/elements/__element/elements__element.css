@@ -1,20 +1,11 @@
 .elements__element {
-  max-width: 282px;
-  min-width: 100%;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
   display: flex;
   flex-direction: column;
-}
-
-@media screen and (max-width: 1024px) {
-  .elements__element {
-    min-width: 0%;
-}
-}
-
-@media screen and (max-width: 640px) {
-  .elements__element {  
-}
+  position: relative;
+  box-sizing: border-box;
+  width: 282px;
+  min-width: max-content; 
+  margin: 0px;
+  padding: 0px;
+  justify-self: center;
 }
