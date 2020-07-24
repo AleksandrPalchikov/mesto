@@ -92,7 +92,7 @@ function formEditSubmitHandler(evt) {
     anyToggleWindow(popupTypeEdit);
 }
 
-//INTURN Card actions
+//INTURN CARD ACTIONS
 //Function that make certan like(in certain card) an aktive/default
 const HandleLikeToggle = (evt) => {
     evt.target.classList.toggle('elements_like_aktive');
@@ -106,9 +106,8 @@ const HandleDeleteClosest = (evt) => {
 //Function - values for 3rd Popup
 const HandleImageClick = (evt) => {
     anyToggleWindow(popupOpenBigImg);
-    popupBigImg.src = evt.target.closest('.elements__element').querySelector('.elements__img').src;
-    popupBigImgFigCapture.textContent = evt.target.closest('.elements__element').querySelector('.elements__title').textContent;
-    popupBigImgFigCapture.alt = evt.target.closest('.elements__element').querySelector('.elements__title').textContent;
+    popupBigImg.src = evt.target.src;
+    popupBigImgFigCapture.textContent = evt.target.alt;
 };
 
 //CARD CREATION
@@ -142,8 +141,7 @@ function CreateCard(data) {
     return cardElement;
 }
 
-//Below BUTTONS actions
-
+//BELOW BUTTONS ACTIONS
 //For Add Popup
 openAddCardButton.addEventListener('click', () => {
   anyToggleWindow(popupTypeNewCard);
