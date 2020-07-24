@@ -103,6 +103,14 @@ const HandleDeleteClosest = (evt) => {
     evt.target.closest('.elements__element').remove();
 };
 
+//Function for 3rd Popup
+const HandleImageClick = (evt) => {
+    anyToggleWindow(popupOpenBigImg);
+    popupBigImg.src = evt.target.closest('.elements__element').cardImage.src;
+    popupBigImgFigCapture.textContent = evt.target.closest('.elements__element').cardTitle.textContent;
+    popupBigImgFigCapture.alt = evt.target.closest('.elements__element').cardTitle.textContent;
+};
+
 //CARD CREATION
 //Creation an initial array 
 initialCards.forEach((data) => {
@@ -129,13 +137,7 @@ function CreateCard(data) {
     //For every card - Like/Delete Button is ative  
     cardLikeButton.addEventListener('click', HandleLikeToggle);
     cardDeliteButton.addEventListener('click', HandleDeleteClosest);
-    //Function for 3rd Popup
-    const HandleImageClick = (evt) => {
-        anyToggleWindow(popupOpenBigImg);
-        popupBigImg.src = cardImage.src;
-        popupBigImgFigCapture.textContent = cardTitle.textContent;
-};
-     //Image like button or image Popup
+    //Image like button or image Popup
     cardImage.addEventListener('click', HandleImageClick);
     return cardElement;
 }
