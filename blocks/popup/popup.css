@@ -7,10 +7,12 @@
 @import url(./__input/_type_name/popup__input_type_name.css);
 @import url(./__submit-button/popup__submit-button.css);
 @import url(./__title/popup__title.css);
-
+@import url(./__figcaption/popup__figcaption.css);
+@import url(./__figure/popup__figure.css);
+@import url(./__img/popup__img.css);
 
 .popup {
-  display: none;
+  display: flex;
   box-sizing: border-box;
   position: fixed;
   top: 0;
@@ -21,5 +23,8 @@
   height: 100vh;
   left: 0px;
   top: 0px;
-  background: #00000050;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.6s, opacity 0.6s linear;
+  
 }

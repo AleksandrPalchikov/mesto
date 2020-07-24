@@ -25,48 +25,6 @@
                 </section>
                 <section class="elements">
                     <ul class="elements__list">
-                        <li class="elements__element">
-                            <img class="elements__img" src="./images/grand-stone.jpg" alt="карачаевск" />
-                            <div class="elements__description-area">
-                                <h2 class="elements__title">Карачаевск</h2>
-                                <button class="elements__like" aria-label="Лайк" type="button"></button>
-                            </div>
-                        </li>
-                        <li class="elements__element">
-                            <img class="elements__img" src="./images/mountains.jpg" alt="гора эльбрус" />
-                            <div class="elements__description-area">
-                                <h2 class="elements__title">Гора Эльбрус</h2>
-                                <button class="elements__like" aria-label="Лайк" type="button"></button>
-                            </div>
-                        </li>
-                        <li class="elements__element">
-                            <img class="elements__img" src="./images/ox-eye-daisy.jpg" alt="домбай" />
-                            <div class="elements__description-area">
-                                <h2 class="elements__title">Домбай</h2>
-                                <button class="elements__like" aria-label="Лайк" type="button"></button>
-                            </div>
-                        </li>
-                        <li class="elements__element">
-                            <img class="elements__img" src="./images/sunset.jpg" alt="гора эльбрус" />
-                            <div class="elements__description-area">
-                                <h2 class="elements__title">Гора Эльбрус</h2>
-                                <button class="elements__like" aria-label="Лайк" type="button"></button>
-                            </div>
-                        </li>
-                        <li class="elements__element">
-                            <img class="elements__img" src="./images/waterfall.jpg" alt="домбай" />
-                            <div class="elements__description-area">
-                                <h2 class="elements__title">Домбай</h2>
-                                <button class="elements__like" aria-label="Лайк" type="button"></button>
-                            </div>
-                        </li>
-                        <li class="elements__element">
-                            <img class="elements__img" src="./images/yellow-flower.jpg" alt="карачаево-Чeркессия" />
-                            <div class="elements__description-area">
-                                <h2 class="elements__title">Карачаево-Чeркессия</h2>
-                                <button class="elements__like" aria-label="Лайк" type="button"></button>
-                            </div>
-                        </li>
                     </ul>
                 </section>
             </main>
@@ -75,7 +33,7 @@
                 <p class="footer__copyright">&copy;2020 Mesto Russia</p>
             </footer>
         </div>
-        <section class="popup">
+        <section class="popup popup_type_edit">
             <form class="popup__container" action="#" method="post" name="edit-profile">
                 <button type="button" class="popup__close-button"></button>
                 <fieldset class="popup__fieldset">
@@ -86,6 +44,37 @@
                 <button class="popup__submit-button" type="submit">Cохранить</button>
             </form>
         </section>
+
+        <section class="popup popup_type_add-card">
+            <form class="popup__container" action="#" method="post" name="edit-profile">
+                <button type="button" class="popup__close-button"></button>
+                <fieldset class="popup__fieldset">
+                    <legend class="popup__title">Новое место</legend>
+                    <input class="popup__input popup__input_type_card-name" value="" placeholder="Название" name="name" type="text" autocomplete="on" required />
+                    <input class="popup__input popup__input_type_card-link" value="" placeholder="Ссылка на картинку" name="job" type="text" autocomplete="on" required />
+                </fieldset>
+                <button class="popup__submit-button" type="submit">Cохранить</button>
+            </form>
+        </section>
+
+        <section class="popup popup_type_open-img">
+            <figure class="popup__figure" alt="">
+            <button type="button" class="popup__close-button"></button>
+            <img type="button" class="popup__img" src ="">
+            <figcaption class="popup__figcaption"></figcaption>
+            </figure>       
+        </section>
+
+        <template class="elements__element-template">
+                        <li class="elements__element">
+                            <button class="elements__trash" type="button" aria-label="Удалить"></button>
+                            <img class="elements__img" src="" alt="">
+                            <div class="elements__description-area">
+                                <h2 class="elements__title"></h2>
+                                <button class="elements__like" aria-label="Лайк" type="button"></button>
+                            </div>
+                        </li>
+                        </template>
         <script src="./scripts/index.js"></script>
     </body>
 </html>
