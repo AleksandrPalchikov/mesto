@@ -107,7 +107,7 @@ const HandleDeleteClosest = (evt) => {
 const HandleImageClick = (evt) => {
     anyToggleWindow(popupOpenBigImg);
     popupBigImg.src = evt.target.src;
-    popupBigImgFigCapture.textContent = evt.target.alt;
+    popupBigImgFigCapture.textContent = evt.target.closest('.elements__element').querySelector('.elements__title').textContent;
 };
 
 //CARD CREATION
