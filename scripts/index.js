@@ -6,20 +6,17 @@ const profileEditButton = profile.querySelector('.profile__edit-button');
 //and Edit-Popup
 const popupTypeEdit = document.querySelector('.popup_type_edit');
 const popupEditContainer = popupTypeEdit.querySelector('.popup__container');
-//Edit Popup Buttons
-const popupSubmitButton =popupTypeEdit.querySelector('.popup__submit-button');
+//Edit Popup Button
 const popupCloseButton = popupTypeEdit.querySelector('.popup__close-button');
 //Edit Popup Inputs
 const inputName = popupTypeEdit.querySelector('.popup__input_type_name');
 const inputJob = popupTypeEdit.querySelector('.popup__input_type_job');
 
 //Consts for Add-Button and Add-Popup(2nd)
-const elements = document.querySelector('.elements');
 const openAddCardButton = profile.querySelector('.profile__add-button');
 const popupTypeNewCard = document.querySelector('.popup_type_add-card');
 //Popap's Buttons
 const popupCardCloseButton = popupTypeNewCard.querySelector('.popup__close-button');
-const popupAddCardSubmitButton = popupTypeNewCard.querySelector('.popup__submit-button');
 const popupAddCardContainer = popupTypeNewCard.querySelector('.popup__container');
 //AddCard Popup Inputs
 const inputCardName = popupTypeNewCard.querySelector('.popup__input_type_card-name');
@@ -63,48 +60,55 @@ const initialCards = [
     }
 ];
 
-//Condion for first popup
+//Toggle fonction for all popup, except editProfilePopup
 function anyToggleWindow(anyModal) {
-    if(!anyModal.classList.contains('popup_opened')) {
+    anyModal.classList.toggle('popup_opened');
+}
+
+//Initialising inputs conditions for editProfilePopup
+function editPopupInputsCondition (popupTypeEdit) {
+    if(popupTypeEdit.classList.contains('popup_opened')) {
         inputName.value = profileName.textContent;
         inputJob.value = profileJob.textContent;
     }
-    anyModal.classList.toggle('popup_opened');
-};
-
-//Function of additon of new cards
-function formAddSubmitHandler(evt) {
-    evt.preventDefault();
-    RenderCard({
-        name: inputCardName.value,
-        link: inputCardLink.value
-    });
-    anyToggleWindow(popupTypeNewCard);
-    inputCardName.value = '';
-    inputCardLink.value ='';
-};
+    //Just to close popup
+    popupTypeEdit.classList.toggle('popup_opened');
+}
 
 //Function of renaming of prfile
 function formEditSubmitHandler(evt) {
     evt.preventDefault();
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
-    anyToggleWindow(popupTypeEdit);
+    //Check the input conditions
+    editPopupInputsCondition(popupTypeEdit);
+}
+
+//Function of additon of new cards
+function formAddSubmitHandler(evt) {
+    evt.preventDefault();
+    renderCard({
+        name: inputCardName.value,
+        link: inputCardLink.value
+    });
+    anyToggleWindow(popupTypeNewCard);
+    inputCardName.value = '';
+    inputCardLink.value ='';
 }
 
 //INTURN CARD ACTIONS
 //Function that make certan like(in certain card) an aktive/default
-const HandleLikeToggle = (evt) => {
+const handleLikeToggle = (evt) => {
     evt.target.classList.toggle('elements_like_aktive');
 };
 
 //Function that delete cerain card
-const HandleDeleteClosest = (evt) => {
+const handleDeleteClosest = (evt) => {
     evt.target.closest('.elements__element').remove();
 };
 
 //Function - values for 3rd Popup
-const HandleImageClick = (evt) => {
+const handleImageClick = (evt) => {
     anyToggleWindow(popupOpenBigImg);
     popupBigImg.src = evt.target.src;
     popupBigImgFigCapture.textContent = evt.target.closest('.elements__element').querySelector('.elements__title').textContent;
@@ -113,16 +117,16 @@ const HandleImageClick = (evt) => {
 //CARD CREATION
 //Creation an initial array 
 initialCards.forEach((data) => {
-    RenderCard(data);
+    renderCard(data);
 });
 
 //Place, where we want to insert a new card(template)
-function RenderCard(data) {
-    cardList.prepend(CreateCard(data));
+function renderCard(data) {
+    cardList.prepend(createCard(data));
 }
 
 //Function that assigns the values(Name/Link/Alt) for every card
-function CreateCard(data) {
+function createCard(data) {
     const cardElement = cardTemplate.cloneNode(true);
     //All indsides from template we wan to make actions
     const cardImage = cardElement.querySelector('.elements__img');
@@ -134,10 +138,10 @@ function CreateCard(data) {
     cardImage.alt = data.name;
     cardTitle.textContent = data.name;
     //For every card - Like/Delete Button is ative  
-    cardLikeButton.addEventListener('click', HandleLikeToggle);
-    cardDeliteButton.addEventListener('click', HandleDeleteClosest);
+    cardLikeButton.addEventListener('click', handleLikeToggle);
+    cardDeliteButton.addEventListener('click', handleDeleteClosest);
     //Image like button or image Popup
-    cardImage.addEventListener('click', HandleImageClick);
+    cardImage.addEventListener('click', handleImageClick);
     return cardElement;
 }
 
