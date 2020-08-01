@@ -5,7 +5,7 @@ const profileJob = profile.querySelector('.profile__description');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 //and Edit-Popup
 const popupTypeEdit = document.querySelector('.popup_type_edit');
-const popupEditContainer = popupTypeEdit.querySelector('.popup__container');
+const popupEditForm = popupTypeEdit.querySelector('.popup__form');
 //Edit Popup Button
 const popupCloseButton = popupTypeEdit.querySelector('.popup__close-button');
 //Edit Popup Inputs
@@ -17,7 +17,7 @@ const openAddCardButton = profile.querySelector('.profile__add-button');
 const popupTypeNewCard = document.querySelector('.popup_type_add-card');
 //Popap's Buttons
 const popupCardCloseButton = popupTypeNewCard.querySelector('.popup__close-button');
-const popupAddCardContainer = popupTypeNewCard.querySelector('.popup__container');
+const popupAddCardForm = popupTypeNewCard.querySelector('.popup__form');
 //AddCard Popup Inputs
 const inputCardName = popupTypeNewCard.querySelector('.popup__input_type_card-name');
 const inputCardLink= popupTypeNewCard.querySelector('.popup__input_type_card-link');
@@ -153,7 +153,7 @@ openAddCardButton.addEventListener('click', () => {
 popupCardCloseButton.addEventListener('click', () => {
   anyToggleWindow(popupTypeNewCard);
 });
-popupAddCardContainer.addEventListener('submit', formAddSubmitHandler);
+popupAddCardForm.addEventListener('submit', formAddSubmitHandler);
 
 //For Edit Popup
 profileEditButton.addEventListener('click', () => {
@@ -162,7 +162,7 @@ profileEditButton.addEventListener('click', () => {
 popupCloseButton.addEventListener('click', () => {
   anyToggleWindow(popupTypeEdit);
 });
-popupEditContainer.addEventListener('submit',formEditSubmitHandler);
+popupEditForm.addEventListener('submit',formEditSubmitHandler);
 
 //For Image Popup
 popupCloseBigImgButton.addEventListener('click', () => {
@@ -170,8 +170,3 @@ popupCloseBigImgButton.addEventListener('click', () => {
 });
 
 //#ЯПЛАКАЛЬ
-
-
-
-
-
