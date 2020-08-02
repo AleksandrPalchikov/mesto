@@ -170,3 +170,25 @@ popupCloseBigImgButton.addEventListener('click', () => {
 });
 
 //#ЯПЛАКАЛЬ
+
+
+document.addEventListener('mouseup', (evt) => {
+    if (evt.target.className !== '.popup__form' && evt.target.classList.contains('popup_opened') && evt.target.classList.contains('popup_type_edit')) {
+        anyToggleWindow(popupTypeEdit);
+    };
+
+    if (evt.target.className !== '.popup__form' && evt.target.classList.contains('popup_opened') && evt.target.classList.contains('popup_type_add-card')) {
+        anyToggleWindow(popupTypeNewCard);
+    };
+
+    if (evt.target.className !== '.popup__img' && evt.target.classList.contains('popup_opened')) {
+        anyToggleWindow(popupOpenBigImg);
+    };
+});
+
+
+
+
+
+
+
