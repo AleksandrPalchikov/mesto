@@ -170,46 +170,28 @@ popupCloseBigImgButton.addEventListener('click', () => {
 });
 
 //#ЯПЛАКАЛЬ
+const overlayClose = (anyPopup) => {
+    anyPopup.addEventListener('mouseup', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            anyToggleWindow(anyPopup);
+        };
+    });
+}
 
-popupTypeNewCard.addEventListener('mouseup', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-        anyToggleWindow(popupTypeNewCard);
-    };
-});
+overlayClose(popupTypeNewCard);
+overlayClose(popupTypeEdit);
+overlayClose(popupOpenBigImg);
 
-//Esc
-document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape' && popupTypeNewCard.classList.contains('popup_opened')) {
-        anyToggleWindow(popupTypeNewCard);
-    }
-});
-
-
-popupTypeEdit.addEventListener('mouseup', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-        anyToggleWindow(popupTypeEdit);
-    };
-});
-
-//Esc
-document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape' && popupTypeEdit.classList.contains('popup_opened')) {
-        anyToggleWindow(popupTypeEdit);
-    }
-});
-
-popupOpenBigImg.addEventListener('mouseup', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-        anyToggleWindow(popupOpenBigImg);
-    };
-});
-
-//Esc
-document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape' && popupOpenBigImg.classList.contains('popup_opened')) {
-        anyToggleWindow(popupOpenBigImg);
-    }
-});
+const escapeClosePopup = (anyPopup) => {
+    document.addEventListener('keydown', (evt) => {
+        if (evt.key === 'Escape' && anyPopup.classList.contains('popup_opened')) {
+            anyToggleWindow(anyPopup);
+        }
+    });    
+}
+escapeClosePopup(popupTypeNewCard);
+escapeClosePopup(popupTypeEdit);
+escapeClosePopup(popupOpenBigImg);
 
 
 
