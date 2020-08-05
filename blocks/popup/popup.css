@@ -10,6 +10,12 @@
 @import url(./__figcaption/popup__figcaption.css);
 @import url(./__figure/popup__figure.css);
 @import url(./__img/popup__img.css);
+@import url(./__form-field/popup__form-field.css);
+@import url(./__input/_type_error/popup__input_type_error.css);
+@import url(./__form-input-error/popup__form-input-error.css);
+@import url(./__button_disabled/popup__button_disabled.css);
+@import url(./__error_visible/popup__error_visible.css);
+
 
 .popup {
   display: flex;
@@ -25,6 +31,5 @@
   top: 0px;
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0.6s, opacity 0.6s linear;
-  
+  transition: visibility 0.6s, opacity 0.6s linear; 
 }

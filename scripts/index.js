@@ -148,43 +148,71 @@ function createCard(data) {
 //BELOW BUTTONS ACTIONS
 //For Add Popup
 openAddCardButton.addEventListener('click', () => {
-  anyToggleWindow(popupTypeNewCard);
+    anyToggleWindow(popupTypeNewCard);
 });
 popupCardCloseButton.addEventListener('click', () => {
-  anyToggleWindow(popupTypeNewCard);
+    anyToggleWindow(popupTypeNewCard);
 });
 popupAddCardForm.addEventListener('submit', formAddSubmitHandler);
 
 //For Edit Popup
 profileEditButton.addEventListener('click', () => {
-  anyToggleWindow(popupTypeEdit);
+    anyToggleWindow(popupTypeEdit);
 });
 popupCloseButton.addEventListener('click', () => {
-  anyToggleWindow(popupTypeEdit);
+    anyToggleWindow(popupTypeEdit);
 });
 popupEditForm.addEventListener('submit',formEditSubmitHandler);
 
 //For Image Popup
 popupCloseBigImgButton.addEventListener('click', () => {
-  anyToggleWindow(popupOpenBigImg);
+    anyToggleWindow(popupOpenBigImg);
 });
 
 //#ЯПЛАКАЛЬ
 
-
-document.addEventListener('mouseup', (evt) => {
-    if (evt.target.className !== '.popup__form' && evt.target.classList.contains('popup_opened') && evt.target.classList.contains('popup_type_edit')) {
-        anyToggleWindow(popupTypeEdit);
-    };
-
-    if (evt.target.className !== '.popup__form' && evt.target.classList.contains('popup_opened') && evt.target.classList.contains('popup_type_add-card')) {
+popupTypeNewCard.addEventListener('mouseup', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
         anyToggleWindow(popupTypeNewCard);
     };
+});
 
-    if (evt.target.className !== '.popup__img' && evt.target.classList.contains('popup_opened')) {
+//Esc
+document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape' && popupTypeNewCard.classList.contains('popup_opened')) {
+        anyToggleWindow(popupTypeNewCard);
+    }
+});
+
+
+popupTypeEdit.addEventListener('mouseup', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+        anyToggleWindow(popupTypeEdit);
+    };
+});
+
+//Esc
+document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape' && popupTypeEdit.classList.contains('popup_opened')) {
+        anyToggleWindow(popupTypeEdit);
+    }
+});
+
+popupOpenBigImg.addEventListener('mouseup', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
         anyToggleWindow(popupOpenBigImg);
     };
 });
+
+//Esc
+document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape' && popupOpenBigImg.classList.contains('popup_opened')) {
+        anyToggleWindow(popupOpenBigImg);
+    }
+});
+
+
+
 
 
 
