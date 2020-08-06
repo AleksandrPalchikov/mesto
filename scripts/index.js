@@ -18,6 +18,7 @@ const popupTypeNewCard = document.querySelector('.popup_type_add-card');
 //Popap's Buttons
 const popupCardCloseButton = popupTypeNewCard.querySelector('.popup__close-button');
 const popupAddCardForm = popupTypeNewCard.querySelector('.popup__form');
+const submitButtonCard = popupTypeNewCard.querySelector('.popup__submit-button')
 //AddCard Popup Inputs
 const inputCardName = popupTypeNewCard.querySelector('.popup__input_type_card-name');
 const inputCardLink= popupTypeNewCard.querySelector('.popup__input_type_card-link');
@@ -72,7 +73,7 @@ function editPopupInputsCondition (popupTypeEdit) {
         inputJob.value = profileJob.textContent;
     }
     //Just to close popup
-    popupTypeEdit.classList.toggle('popup_opened');
+    anyToggleWindow( popupTypeEdit);
 }
 
 //Function of renaming of prfile
@@ -94,6 +95,8 @@ function formAddSubmitHandler(evt) {
     anyToggleWindow(popupTypeNewCard);
     inputCardName.value = '';
     inputCardLink.value ='';
+    submitButtonCard.classList.add('popup__button_disabled');
+    submitButtonCard.disabled = true;
 }
 
 //INTURN CARD ACTIONS
@@ -174,7 +177,7 @@ const overlayClose = (anyPopup) => {
     anyPopup.addEventListener('mouseup', (evt) => {
         if (evt.target.classList.contains('popup_opened')) {
             anyToggleWindow(anyPopup);
-        };
+        }
     });
 }
 

@@ -1,4 +1,4 @@
-const initialObject = {
+const popupClassesObject = {
     formSelector: '.popup__form', 
     inputSelector: '.popup__input', 
     submitButtonSelector: '.popup__submit-button', 
@@ -8,7 +8,7 @@ const initialObject = {
 };
 
 //Declaration ok keys to use properties like variable
-let {formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass} = initialObject;
+let {formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass} = popupClassesObject;
 
 const showInputError = (formElement, inputElement, errorMessage) => {
     //inside the INPUT - errorElement was founded via ID of (INPUT + "error").
@@ -69,7 +69,7 @@ const toggleButtonState = (inputs, submitButtons) => {
     }
 }
 
-const enableValidationSubmit = () => {
+const enableValidation = () => {
     // All forms in HTML we have found. It was created an array [form,form,form]
     const forms = Array.from(document.querySelectorAll(formSelector));
     // For each form we have decline a default value via addEventListener
@@ -81,4 +81,4 @@ const enableValidationSubmit = () => {
 });
 }
 
-enableValidationSubmit();
+enableValidation();
