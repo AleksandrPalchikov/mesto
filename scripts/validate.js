@@ -84,12 +84,18 @@ enableValidation(popupClassesObject);
 
 //FormReset
 function  popupFormReset(anyModal, {formSelector, inputSelector, submitButtonSelector, ...rest}){
+    //Variables for concrete Popup
     const concretePopupForm =  anyModal.querySelector(formSelector);
     const concreteInputsFormList = Array.from(concretePopupForm.querySelectorAll(inputSelector));
     const concreteInputButton = concretePopupForm.querySelector(submitButtonSelector);
-    const resetPopup = concretePopupForm.reset();
+    //Reset form, but it schould be current value, but not the initial one.
+    concretePopupForm.reset();
+    // After reset we schould to insert current values from header into popup one more time.
+    inputName.value = profileName.textContent;
+    inputJob.value = profileJob.textContent;
+    //Check all buttons and inputs after close popup to hide errors.
     concreteInputsFormList.forEach((concreteInputsFormListElement) => {
     hideInputError(concretePopupForm, concreteInputsFormListElement, rest);
     toggleButtonState(concreteInputsFormList, concreteInputButton, rest);
     });
-}
+} 
