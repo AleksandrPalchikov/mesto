@@ -86,8 +86,10 @@ enableValidation(popupClassesObject);
 function  popupFormReset(anyModal, {formSelector, inputSelector, submitButtonSelector, ...rest}){
     const concretePopupForm =  anyModal.querySelector(formSelector);
     const concreteInputsFormList = Array.from(concretePopupForm.querySelectorAll(inputSelector));
+    const concreteInputButton = concretePopupForm.querySelector(submitButtonSelector);
     const resetPopup = concretePopupForm.reset();
     concreteInputsFormList.forEach((concreteInputsFormListElement) => {
-    checkInputValidity(concretePopupForm, concreteInputsFormListElement, rest);
+    hideInputError(concretePopupForm, concreteInputsFormListElement, rest);
+    toggleButtonState(concreteInputsFormList, concreteInputButton, rest);
     });
 }
