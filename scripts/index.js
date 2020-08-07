@@ -28,6 +28,7 @@ const popupOpenBigImg = document.querySelector('.popup_type_open-img');
 const popupCloseBigImgButton = popupOpenBigImg.querySelector('.popup__close-button');
 const popupBigImg = popupOpenBigImg.querySelector('.popup__img');
 const popupBigImgFigCapture = popupOpenBigImg.querySelector('.popup__figcaption');
+const popupBigImgOpenImgState = popupOpenBigImg.querySelector('.popup__img');
 
 //Const for Template search 
 const cardTemplate = document.querySelector('.elements__element-template').content.querySelector('.elements__element');
@@ -71,15 +72,15 @@ const isThisPopupOpend = (evt) => {
 }
 
 
-//ADD AND DELETE ESCAPE HISTORY. Watch the sequence of actions from anyToggleWindow to HandlerOnEscape.^
-const HandlerOnEscape = (evt, anyModal) => {
+//ADD AND DELETE ESCAPE HISTORY. Watch the sequence of actions from anyToggleWindow to handlerOnEscape.^
+const handlerOnEscape = (evt, anyModal) => {
     if (evt.key === 'Escape' && anyModal.classList.contains('popup_opened')) {
         anyToggleWindow(anyModal);
     }
 }
 
-//ADD AND DELETE OVERLAY HISTORY. Watch the sequence of actions from anyToggleWindow to HandlerOnEscape.^
-const HandlerOnOverlay = (evt, anyModal) => {
+//ADD AND DELETE OVERLAY HISTORY. Watch the sequence of actions from anyToggleWindow to handlerOnEscape.^
+const handlerOnOverlay = (evt, anyModal) => {
         if (isThisPopupOpend(evt)) {
             anyToggleWindow(anyModal);
     }
@@ -87,21 +88,30 @@ const HandlerOnOverlay = (evt, anyModal) => {
 
 //ESC
 const addEventListenersEsc = (anyModal) => {
-    document.addEventListener('keydown', (evt) => HandlerOnEscape(evt, anyModal));    
+    document.addEventListener('keydown', (evt) => handlerOnEscape(evt, anyModal));    
 }
 //ESC
 const removeEventListenersEsc = (anyModal) => {
-    document.removeEventListener('keydown', (evt) => HandlerOnEscape(evt, anyModal));
+    document.removeEventListener('keydown', (evt) => handlerOnEscape(evt, anyModal));
 }
 
 //OVERLAY
 const addEventListenersOverlay = (anyModal) => {
-    anyModal.addEventListener('mouseup', (evt) => HandlerOnOverlay(evt, anyModal));    
+    anyModal.addEventListener('mouseup', (evt) => handlerOnOverlay(evt, anyModal));    
 }
 //OVERLAY
 const removeEventListenersOverlay = (anyModal) => {
-    anyModal.removeEventListener('mouseup', (evt) => HandlerOnOverlay(evt, anyModal));
+    anyModal.removeEventListener('mouseup', (evt) => handlerOnOverlay(evt, anyModal));
 }
+
+// If popup doesn't contain inputs(just imagepopup) then do not a reset for popups
+
+function areInputsInPopup (anyModal) {
+    if (anyModal !== popupOpenBigImg) {
+        popupFormReset(anyModal, popupClassesObject);
+    }
+}
+
 
  //ESC. Creation or Removng of EventListener in moment of Open/Close Popup
 const  toggleEscHandler = (anyModal) => {
@@ -109,9 +119,10 @@ const  toggleEscHandler = (anyModal) => {
         addEventListenersEsc(anyModal);
     } else {
         removeEventListenersEsc(anyModal);
-        popupFormReset(anyModal, popupClassesObject);
+        areInputsInPopup (anyModal);
+    }
+        console.log('Reset');
     } 
-}
 
  //OVERLAY. Creation or Removng of EventListener in moment of Open/Close Popup
 const  toggleOverlayHandler = (anyModal) => {
@@ -119,7 +130,6 @@ const  toggleOverlayHandler = (anyModal) => {
         addEventListenersOverlay(anyModal);
     } else {
         removeEventListenersOverlay(anyModal);
-
     } 
 }
 
@@ -128,14 +138,18 @@ function anyToggleWindow(anyModal) {
     anyModal.classList.toggle('popup_opened');
     toggleEscHandler(anyModal);
     toggleOverlayHandler(anyModal);
-    
+}
+
+function inputsValuesInProfile () {
+    inputName.value = profileName.textContent;
+    inputJob.value = profileJob.textContent;
 }
 
 //Initialising inputs conditions for editProfilePopup
 function editPopupInputsCondition (popupTypeEdit) {
-    if(popupTypeEdit.classList.contains('popup_opened')) {
-        inputName.value = profileName.textContent;
-        inputJob.value = profileJob.textContent;
+    if(popupTypeEdit.classList.contains('popup_opened')){
+         //Take an exsiting values of profile;
+        inputsValuesInProfile();
     }
     //Just to close popup
     anyToggleWindow( popupTypeEdit);
@@ -160,8 +174,7 @@ function formAddSubmitHandler(evt) {
     anyToggleWindow(popupTypeNewCard);
     inputCardName.value = '';
     inputCardLink.value ='';
-    submitButtonCard.classList.add('popup__button_disabled');
-    submitButtonCard.disabled = true;
+    //Cooment for reviewer: It works now with reset
 }
 
 //INTURN CARD ACTIONS
@@ -178,8 +191,10 @@ const handleDeleteClosest = (evt) => {
 //Function - values for 3rd Popup
 const handleImageClick = (evt) => {
     anyToggleWindow(popupOpenBigImg);
+    console.log(evt.target.src);
     popupBigImg.src = evt.target.src;
     popupBigImgFigCapture.textContent = evt.target.closest('.elements__element').querySelector('.elements__title').textContent;
+    popupBigImgOpenImgState.alt = evt.target.alt;
 };
 
 //CARD CREATION
@@ -221,7 +236,6 @@ openAddCardButton.addEventListener('click', () => {
 });
 popupCardCloseButton.addEventListener('click', () => {
     anyToggleWindow(popupTypeNewCard);
-    popupFormReset(popupTypeNewCard, popupClassesObject);
 });
 popupAddCardForm.addEventListener('submit', formAddSubmitHandler);
 
@@ -231,7 +245,6 @@ profileEditButton.addEventListener('click', () => {
 });
 popupCloseButton.addEventListener('click', () => {
     anyToggleWindow(popupTypeEdit);
-    popupFormReset(popupTypeEdit, popupClassesObject);
 });
 popupEditForm.addEventListener('submit',formEditSubmitHandler);
 

@@ -1,3 +1,4 @@
+
 const popupClassesObject = {
     formSelector: '.popup__form', 
     inputSelector: '.popup__input', 
@@ -38,16 +39,23 @@ const isFormInValid = (inputs) => {
     return inputs.some((inputElement) => !inputElement.validity.valid); 
 }
 
+const popupButtonDisabled = (submitButtons, {inactiveButtonClass, ...rest}) => {
+    submitButtons.classList.add(inactiveButtonClass);
+    submitButtons.disabled = true;
+}
 
-const toggleButtonState = (inputs, submitButtons, {inactiveButtonClass, ...rest}) => {
+const popupButtonAktive = (submitButtons, {inactiveButtonClass, ...rest}) => {
+    submitButtons.classList.remove(inactiveButtonClass);
+    submitButtons.disabled = false;
+}
+
+const toggleButtonState = (inputs, submitButtons, {...rest}) => {
     // It was checked all inputElements via isFormValid. 
     //Depending on the isFormInValid function it will be add or remove inactive class(CSS) + disabled label for SUBMITBUTTON
     if (isFormInValid(inputs)) {
-        submitButtons.classList.add(inactiveButtonClass);
-        submitButtons.disabled = true;
+        popupButtonDisabled(submitButtons, rest);
     } else {
-        submitButtons.classList.remove(inactiveButtonClass);
-        submitButtons.disabled = false;
+        popupButtonAktive(submitButtons, rest);
     }
 }
 
@@ -82,6 +90,9 @@ const enableValidation = ({formSelector, ...rest}) => {
 
 enableValidation(popupClassesObject);
 
+
+//Those popUps wich contain i nputs should come here
+
 //FormReset
 function  popupFormReset(anyModal, {formSelector, inputSelector, submitButtonSelector, ...rest}){
     //Variables for concrete Popup
@@ -89,13 +100,12 @@ function  popupFormReset(anyModal, {formSelector, inputSelector, submitButtonSel
     const concreteInputsFormList = Array.from(concretePopupForm.querySelectorAll(inputSelector));
     const concreteInputButton = concretePopupForm.querySelector(submitButtonSelector);
     //Reset form, but it schould be current value, but not the initial one.
-    concretePopupForm.reset();
-    // After reset we schould to insert current values from header into popup one more time.
-    inputName.value = profileName.textContent;
-    inputJob.value = profileJob.textContent;
-    //Check all buttons and inputs after close popup to hide errors.
+    concretePopupForm.reset(); 
+    //After reset we schould to insert current values from Profile into ProfileEditPopup one more time.
+    inputsValuesInProfile ();
+    //Check all buttons and inputs after close popup to hide errors.  
     concreteInputsFormList.forEach((concreteInputsFormListElement) => {
-    hideInputError(concretePopupForm, concreteInputsFormListElement, rest);
-    toggleButtonState(concreteInputsFormList, concreteInputButton, rest);
-    });
-} 
+        hideInputError(concretePopupForm, concreteInputsFormListElement, rest);
+        toggleButtonState(concreteInputsFormList, concreteInputButton, rest);
+        });
+    }
