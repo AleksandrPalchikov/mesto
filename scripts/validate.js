@@ -1,4 +1,3 @@
-
 const popupClassesObject = {
     formSelector: '.popup__form', 
     inputSelector: '.popup__input', 
@@ -90,8 +89,6 @@ const enableValidation = ({formSelector, ...rest}) => {
 
 enableValidation(popupClassesObject);
 
-
-//Those popUps wich contain i nputs should come here
 
 //FormReset
 function  popupFormReset(anyModal, {formSelector, inputSelector, submitButtonSelector, ...rest}){

@@ -28,7 +28,6 @@ const popupOpenBigImg = document.querySelector('.popup_type_open-img');
 const popupCloseBigImgButton = popupOpenBigImg.querySelector('.popup__close-button');
 const popupBigImg = popupOpenBigImg.querySelector('.popup__img');
 const popupBigImgFigCapture = popupOpenBigImg.querySelector('.popup__figcaption');
-const popupBigImgOpenImgState = popupOpenBigImg.querySelector('.popup__img');
 
 //Const for Template search 
 const cardTemplate = document.querySelector('.elements__element-template').content.querySelector('.elements__element');
@@ -112,32 +111,27 @@ function areInputsInPopup (anyModal) {
     }
 }
 
-
- //ESC. Creation or Removng of EventListener in moment of Open/Close Popup
-const  toggleEscHandler = (anyModal) => {
+//Adding Listeners for Overlay and Esc
+const addEscOverlayHandler  = (anyModal) => {
     if (isPopupOpend(anyModal)) {
         addEventListenersEsc(anyModal);
-    } else {
-        removeEventListenersEsc(anyModal);
-        areInputsInPopup (anyModal);
-    }
-        console.log('Reset');
-    } 
-
- //OVERLAY. Creation or Removng of EventListener in moment of Open/Close Popup
-const  toggleOverlayHandler = (anyModal) => {
-    if (isPopupOpend(anyModal)) {
         addEventListenersOverlay(anyModal);
-    } else {
+    }
+}
+//Removing Listeners for Overlay and Esc and reset for popups with inputs
+const removeEscOverlayHandler = (anyModal) => {
+    if (!isPopupOpend(anyModal)) {
+        removeEventListenersEsc(anyModal);
         removeEventListenersOverlay(anyModal);
-    } 
+        areInputsInPopup(anyModal);
+    }
 }
 
 //Toggle fonction for all popup, except editProfilePopup
 function anyToggleWindow(anyModal) {
     anyModal.classList.toggle('popup_opened');
-    toggleEscHandler(anyModal);
-    toggleOverlayHandler(anyModal);
+    removeEscOverlayHandler(anyModal);
+    addEscOverlayHandler(anyModal);
 }
 
 function inputsValuesInProfile () {
@@ -191,10 +185,9 @@ const handleDeleteClosest = (evt) => {
 //Function - values for 3rd Popup
 const handleImageClick = (evt) => {
     anyToggleWindow(popupOpenBigImg);
-    console.log(evt.target.src);
     popupBigImg.src = evt.target.src;
     popupBigImgFigCapture.textContent = evt.target.closest('.elements__element').querySelector('.elements__title').textContent;
-    popupBigImgOpenImgState.alt = evt.target.alt;
+    popupBigImg.alt = evt.target.alt;
 };
 
 //CARD CREATION
