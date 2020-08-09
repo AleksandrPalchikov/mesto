@@ -7,7 +7,6 @@ const popupClassesObject = {
     errorClass: 'popup__error_visible'
 };
 
-
 const showInputError = (formElement, inputElement, errorMessage, {inputErrorClass, errorClass}) => {
     //inside the INPUT - errorElement was founded via ID of (INPUT + "error").
     const errorElement =  formElement.querySelector(`#${inputElement.id}-error`); //Why i cannot use here querySelectorAll? 
@@ -86,9 +85,7 @@ const enableValidation = ({formSelector, ...rest}) => {
     setEventListenersOnInputs(formElement, rest);
 });
 }
-
 enableValidation(popupClassesObject);
-
 
 //FormReset
 function  popupFormReset(anyModal, {formSelector, inputSelector, submitButtonSelector, ...rest}){
