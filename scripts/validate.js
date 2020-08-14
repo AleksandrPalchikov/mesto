@@ -103,3 +103,8 @@ function  popupFormReset(anyModal, {formSelector, inputSelector, submitButtonSel
         toggleButtonState(concreteInputsFormList, concreteInputButton, rest);
         });
     }
+
+
+/*class = FormValidator {
+
+} */

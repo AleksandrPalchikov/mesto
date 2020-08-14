@@ -29,10 +29,6 @@ const popupCloseBigImgButton = popupOpenBigImg.querySelector('.popup__close-butt
 const popupBigImg = popupOpenBigImg.querySelector('.popup__img');
 const popupBigImgFigCapture = popupOpenBigImg.querySelector('.popup__figcaption');
 
-//Const for Template search 
-const cardTemplate = document.querySelector('.elements__element-template').content.querySelector('.elements__element');
-const cardList = document.querySelector('.elements__list');
-
 //Default array of initial data
 const initialCards = [
     {
@@ -67,7 +63,6 @@ const handlerOnEscape = (evt, anyModal) => {
         removeAnyWindow(anyModal);
     }
 }
-
 //ADD AND DELETE OVERLAY HISTORY. Watch the sequence of actions from anyToggleWindow to handlerOnEscape.^
 const HandlerOnOverlay = (evt, anyModal) => {
     if (evt.target.classList.contains('popup_opened')){
@@ -93,20 +88,21 @@ const removeEventListenersOverlay = (anyModal) => {
     anyModal.removeEventListener('mouseup', (evt) => HandlerOnOverlay(evt, anyModal));
 }
 
-// If popup doesn't contain inputs(just imagepopup) then do not a reset for popups
+//If popup doesn't contain inputs(just imagepopup) then do not a reset for popups
 function areInputsInPopup (anyModal) {
     if (anyModal !== popupOpenBigImg) {
         popupFormReset(anyModal, popupClassesObject);
     }
 }
 
-//Function Open Popup - YP Project Managers MISTAKE
+//Function Open Popup - YP Project Managers MISTAKE(REDO)
 function addAnyWindow(anyModal){
     anyModal.classList.add('popup_opened');
     addEventListenersEsc(anyModal);
     addEventListenersOverlay(anyModal);
 }
-//Function Open Popup - YP Project Managers MISTAKE
+
+//Function Open Popup - YP Project Managers MISTAKE (REDO)
 function removeAnyWindow(anyModal){
     anyModal.classList.remove('popup_opened');
     removeEventListenersEsc(anyModal);
@@ -132,6 +128,7 @@ function editPopupInputsCondition (popupTypeEdit) {
 //Function of renaming of prfile
 function formEditSubmitHandler(evt) {
     evt.preventDefault();
+    //whrite values from inputs
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
     //Check the input conditions
@@ -141,64 +138,88 @@ function formEditSubmitHandler(evt) {
 //Function of additon of new cards
 function formAddSubmitHandler(evt) {
     evt.preventDefault();
-    renderCard({
+    renderCards([{
         name: inputCardName.value,
         link: inputCardLink.value
-    });
+    }]);
     removeAnyWindow(popupTypeNewCard);
     inputCardName.value = '';
     inputCardLink.value ='';
 }
 
-//INTURN CARD ACTIONS
+//OOP - refactoring
+class Card {
+    constructor (data, cardSelector) {
+    this._cardSelector = cardSelector;
+    this._name = data.name;
+    this._link = data.link;
+}
+
+// set Listeners inside the every card from Template or for NewCard
+_setEventListeners() {
+    const cardLikeButton = this._element.querySelector('.elements__like');
+    const cardDeliteButton = this._element.querySelector('.elements__trash');
+    const cardImage = this._element.querySelector('.elements__img');
+    //For every card - Like/Delete Button is ative  
+    cardLikeButton.addEventListener('click', (evt) => {this._handleLikeToggle(evt)});
+    cardDeliteButton.addEventListener('click', (evt) => {this._handleDeleteClosest(evt)});
+    //Image like button or image Popup
+    cardImage.addEventListener('click',(evt) => {this._handleImageClick(evt)});
+}
+
+//Get template from HTML. Now we can get different template thanks to _cardDelector. We just can change class in a render class
+_getTemplate() {
+    const cardTemplate = document.querySelector(this._cardSelector).content.querySelector('.elements__element');
+    const cardElement = cardTemplate.cloneNode(true);
+    return cardElement;
+}
+
+// Rewhriting values from InitialCard(dataBank) or from NewCard inputs into Template
+generateCard(){
+    this._element = this._getTemplate();
+    this._setEventListeners();       
+    //All indsides from template we wan to make actions
+    const cardImage = this._element.querySelector('.elements__img');
+    const cardTitle = this._element.querySelector('.elements__title');
+
+    //Rendering/actions/changes
+    cardImage.src = this._link;
+    cardImage.alt = this._name;
+    cardTitle.textContent = this._name;
+    //Returning an upgraded element
+    return this._element;
+}
+
 //Function that make certan like(in certain card) an aktive/default
-const handleLikeToggle = (evt) => {
+_handleLikeToggle(evt) {
     evt.target.classList.toggle('elements_like_aktive');
 };
-
-//Function that delete cerain card
-const handleDeleteClosest = (evt) => {
+//Function that delete certain card
+_handleDeleteClosest(evt) {
     evt.target.closest('.elements__element').remove();
 };
-
-//Function - values for 3rd Popup
-const handleImageClick = (evt) => {
+//Function - values for 3rd Popup. Take image from card and putt it in ImgPopup
+_handleImageClick(evt){
     addAnyWindow(popupOpenBigImg);
     popupBigImg.src = evt.target.src;
     popupBigImgFigCapture.textContent = evt.target.closest('.elements__element').querySelector('.elements__title').textContent;
     popupBigImg.alt = evt.target.alt;
 };
+} 
 
-//CARD CREATION
+//We go through the whole Template array and create a new card through the new Class. The same for NewCard from inputs
+function renderCards(initialCards){
 //Creation an initial array 
 initialCards.forEach((data) => {
-    renderCard(data);
+    const card = new Card(data, '.elements__element-template');
+    const cardElement = card.generateCard(); //we have got here an upgraded element from generateCard() to insert it in Class List
+    // Добавляем в DOM
+    const cardList = document.querySelector('.elements__list');
+    cardList.prepend(cardElement);
 });
-
-//Place, where we want to insert a new card(template)
-function renderCard(data) {
-    cardList.prepend(createCard(data));
 }
-
-//Function that assigns the values(Name/Link/Alt) for every card
-function createCard(data) {
-    const cardElement = cardTemplate.cloneNode(true);
-    //All indsides from template we wan to make actions
-    const cardImage = cardElement.querySelector('.elements__img');
-    const cardTitle = cardElement.querySelector('.elements__title');
-    const cardLikeButton = cardElement.querySelector('.elements__like');
-    const cardDeliteButton = cardElement.querySelector('.elements__trash');
-    //Rendering/actions/changes
-    cardImage.src = data.link;
-    cardImage.alt = data.name;
-    cardTitle.textContent = data.name;
-    //For every card - Like/Delete Button is ative  
-    cardLikeButton.addEventListener('click', handleLikeToggle);
-    cardDeliteButton.addEventListener('click', handleDeleteClosest);
-    //Image like button or image Popup
-    cardImage.addEventListener('click', handleImageClick);
-    return cardElement;
-}
+//It's a great sin to forget to call a function. End Of CardsActions. I don't now how; but I've done that :)
+renderCards(initialCards);
 
 //BELOW BUTTONS ACTIONS
 //Add Popup
@@ -219,14 +240,13 @@ profileEditButton.addEventListener('click', () => {
 popupCloseButton.addEventListener('click', () => {
     removeAnyWindow(popupTypeEdit);
 });
+
 popupEditForm.addEventListener('submit',formEditSubmitHandler);
 
 //For Image Popup
 popupCloseBigImgButton.addEventListener('click', () => {
     removeAnyWindow(popupOpenBigImg);
 });
-
-
 
 
 
