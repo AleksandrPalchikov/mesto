@@ -88,10 +88,11 @@ const removeEventListenersOverlay = (anyModal) => {
     anyModal.removeEventListener('mouseup', (evt) => HandlerOnOverlay(evt, anyModal));
 }
 
+
 //If popup doesn't contain inputs(just imagepopup) then do not a reset for popups
 function areInputsInPopup (anyModal) {
     if (anyModal !== popupOpenBigImg) {
-        popupFormReset(anyModal, popupClassesObject);
+        formValidator.popupFormReset(anyModal); //!!!!!!!Was Changed
     }
 }
 
