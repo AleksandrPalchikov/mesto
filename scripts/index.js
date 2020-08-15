@@ -106,7 +106,7 @@ function addAnyWindow(anyModal){
 //Function Open Popup - YP Project Managers MISTAKE (REDO)
 function removeAnyWindow(anyModal){
     anyModal.classList.remove('popup_opened');
-    removeEventListenersEsc(anyModal);
+    removeEventListenersEsc(anyModal);   
     removeEventListenersOverlay(anyModal);
     areInputsInPopup(anyModal);
 }

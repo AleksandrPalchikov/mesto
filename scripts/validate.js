@@ -118,7 +118,7 @@ const popupClassesObject = {
         // For each form we have decline a default value via addEventListener
         forms.forEach((formElement) => {
         const formValidator  = new FormValidator(rest, formElement);
-        formValidator.enableValidation();
+        formValidator.enableValidation();   
         formValidator.popupFormReset(anyModal);
         
         /*formValidator.popupFormReset(anyModal); */
