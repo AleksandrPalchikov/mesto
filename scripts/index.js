@@ -88,13 +88,27 @@ const removeEventListenersOverlay = (anyModal) => {
     anyModal.removeEventListener('mouseup', (evt) => HandlerOnOverlay(evt, anyModal));
 }
 
-
-//If popup doesn't contain inputs(just imagepopup) then do not a reset for popups
-function areInputsInPopup (anyModal) {
-    if (anyModal !== popupOpenBigImg) {
-        formValidator.popupFormReset(anyModal); //!!!!!!!Was Changed
+//HELP AREA!!! -----------------------------------
+    //If popup doesn't contain inputs(just imagepopup) then do not a reset for popups
+    function areInputsInPopup (anyModal, formsWithClass) {
+        if (anyModal!== popupOpenBigImg){
+            
+        formsWithClass.forEach((editFormValidatorElement) => {
+            editFormValidatorElement.popupFormReset();
+            //formsWithClass not DEFINED IN THIS AREA. How can I call it here ????
+        });
+            inputsValuesInProfile(); 
     }
 }
+//----------------------------------------------------------------------
+
+// //If popup doesn't contain inputs(just imagepopup) then do not a reset for popups
+// function areInputsInPopup (anyModal) {
+//     if (anyModal !== popupOpenBigImg){
+//         (new FormValidator).popupFormReset();
+//         inputsValuesInProfile();
+//     }
+// }
 
 //Function Open Popup - YP Project Managers MISTAKE(REDO)
 function addAnyWindow(anyModal){
@@ -108,7 +122,7 @@ function removeAnyWindow(anyModal){
     anyModal.classList.remove('popup_opened');
     removeEventListenersEsc(anyModal);   
     removeEventListenersOverlay(anyModal);
-    areInputsInPopup(anyModal);
+    areInputsInPopup(anyModal, formsWithClass);//!!!!!!added formsWithClass
 }
 
 function inputsValuesInProfile () {

@@ -7,11 +7,14 @@ const popupClassesObject = {
     errorClass: 'popup__error_visible'
 };
 
-
-
     class FormValidator {
-        constructor({formSelector,inputSelector,submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}, formElement) {
-            this._formSelector = formSelector;
+        constructor({
+            inputSelector,
+            submitButtonSelector,
+            inactiveButtonClass,
+            inputErrorClass,
+            errorClass},
+            formElement){
             this._inputSelector = inputSelector;
             this._submitButtonSelector = submitButtonSelector;
             this._inactiveButtonClass = inactiveButtonClass;
@@ -88,6 +91,7 @@ const popupClassesObject = {
             }
 
             enableValidation(){
+                // For each form we have decline a default value via addEventListener
                 this.formElement.addEventListener('submit', (evt) => {
                     evt.preventDefault();    
                     });
@@ -95,38 +99,36 @@ const popupClassesObject = {
             }
 
             //FormReset
-            popupFormReset(anyModal){
-                //Variables for concrete Popup
-                const concretePopupForm =  anyModal.querySelector(this.formSelector);
-                const concreteInputsFormList = Array.from(concretePopupForm.querySelectorAll(this._inputSelector));
-                const concreteInputButton = concretePopupForm.querySelector(this._submitButtonSelector);
+            popupFormReset(){
+                const concreteInputsFormList = Array.from(this.formElement.querySelectorAll(this._inputSelector));
+                console.log(concreteInputsFormList);
+                const concreteInputButton = this.formElement.querySelector(this._submitButtonSelector);
                 //Reset form, but it schould be current value, but not the initial one.
-                concretePopupForm.reset(); 
-                //After reset we schould to insert current values from Profile into ProfileEditPopup one more time.
-                inputsValuesInProfile();
+                this.formElement.reset(); 
                 //Check all buttons and inputs after close popup to hide errors.  
                 concreteInputsFormList.forEach((concreteInputsFormListElement) => {
                     this._hideInputError(concreteInputsFormListElement); //was deleted concretePopupForm!!!
-                    this._toggleButtonState(concreteInputButton); //was deleted concretePopupForm!!!
+                    this._toggleButtonState(concreteInputsFormListElement, concreteInputButton); //was deleted concretePopupForm!!!
                     });
                 } 
         }
 
-    createFormValidator = ({formSelector, ...rest}) => {
-        // All forms in HTML we have found. It was created an array [form,form,form]
+    function createFormValidator({
+        formSelector,
+        ...rest}
+        ){
+        // All forms in HTML we have found. It was created an array [formEditProf,formAddCard]
         const forms = Array.from(document.querySelectorAll(formSelector));
-        // For each form we have decline a default value via addEventListener
-        forms.forEach((formElement) => {
-        const formValidator  = new FormValidator(rest, formElement);
-        formValidator.enableValidation();   
-        formValidator.popupFormReset(anyModal);
-        
-        /*formValidator.popupFormReset(anyModal); */
+        /*console.log(forms); */
+        const formsWithClass = forms.map((formElement) => {
+        const editFormValidator  = new FormValidator(rest, formElement);
+        editFormValidator.enableValidation(); 
+        return editFormValidator;
     });
-    }
+    return formsWithClass;
+}
 
     createFormValidator(popupClassesObject);
-
 
 
             //const showInputError = (formElement, inputElement, errorMessage, {inputErrorClass, errorClass}) => {
