@@ -4,7 +4,7 @@ const profileName = profile.querySelector('.profile__title');
 const profileJob = profile.querySelector('.profile__description');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 //and Edit-Popup
-const popupTypeEdit = document.querySelector('.popup_type_edit');
+/* const popupTypeEdit = document.querySelector('.popup_type_edit');*/
 const popupEditForm = popupTypeEdit.querySelector('.popup__form');
 //Edit Popup Button
 const popupCloseButton = popupTypeEdit.querySelector('.popup__close-button');
@@ -14,7 +14,7 @@ const inputJob = popupTypeEdit.querySelector('.popup__input_type_job');
 
 //Consts for Add-Button and Add-Popup(2nd)
 const openAddCardButton = profile.querySelector('.profile__add-button');
-const popupTypeNewCard = document.querySelector('.popup_type_add-card');
+/*const popupTypeNewCard = document.querySelector('.popup_type_add-card');*/
 //Popap's Buttons
 const popupCardCloseButton = popupTypeNewCard.querySelector('.popup__close-button');
 const popupAddCardForm = popupTypeNewCard.querySelector('.popup__form');
@@ -90,25 +90,14 @@ const removeEventListenersOverlay = (anyModal) => {
 
 //HELP AREA!!! -----------------------------------
     //If popup doesn't contain inputs(just imagepopup) then do not a reset for popups
-    function areInputsInPopup (anyModal, formsWithClass) {
-        if (anyModal!== popupOpenBigImg){
-            
-        formsWithClass.forEach((editFormValidatorElement) => {
-            editFormValidatorElement.popupFormReset();
-            //formsWithClass not DEFINED IN THIS AREA. How can I call it here ????
-        });
+    function resetConcrerePopup (anyModal) {
+        if (anyModal ===  popupTypeEdit){
+            editFormValidator.popupFormReset();
             inputsValuesInProfile(); 
-    }
-}
-//----------------------------------------------------------------------
-
-// //If popup doesn't contain inputs(just imagepopup) then do not a reset for popups
-// function areInputsInPopup (anyModal) {
-//     if (anyModal !== popupOpenBigImg){
-//         (new FormValidator).popupFormReset();
-//         inputsValuesInProfile();
-//     }
-// }
+        } else if (anyModal ===  popupTypeNewCard){
+            cardFormValidator.popupFormReset();
+        }
+    } 
 
 //Function Open Popup - YP Project Managers MISTAKE(REDO)
 function addAnyWindow(anyModal){
@@ -122,7 +111,7 @@ function removeAnyWindow(anyModal){
     anyModal.classList.remove('popup_opened');
     removeEventListenersEsc(anyModal);   
     removeEventListenersOverlay(anyModal);
-    areInputsInPopup(anyModal, formsWithClass);//!!!!!!added formsWithClass
+    resetConcrerePopup(anyModal);
 }
 
 function inputsValuesInProfile () {
