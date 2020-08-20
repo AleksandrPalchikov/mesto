@@ -1,15 +1,9 @@
-const popupTypeEdit = document.querySelector('.popup_type_edit');
-const popupTypeNewCard = document.querySelector('.popup_type_add-card');
+import { 
+    popupTypeEdit,
+    popupTypeNewCard,
+    popupClassesObject
+} from './constants.js';
 
-const popupClassesObject = {
-    formSelector: '.popup__form', 
-    inputSelector: '.popup__input', 
-    submitButtonSelector: '.popup__submit-button', 
-    inactiveButtonClass: 'popup__button_disabled', 
-    inputErrorClass: 'popup__input_type_error',  
-    errorClass: 'popup__error_visible'
-};
-    
 class FormValidator {
     constructor(defaultFormConfig, formElement){
         this._formSelector = defaultFormConfig.formSelector;
@@ -112,9 +106,16 @@ class FormValidator {
         } 
 }
 
-    /* popupTypeEdit, popupTypeNewCard */
-    const editFormValidator = new FormValidator(popupClassesObject, popupTypeEdit);
-    editFormValidator.enableValidation();
-    
-    const cardFormValidator = new FormValidator(popupClassesObject, popupTypeNewCard);
-    cardFormValidator.enableValidation();
+/* popupTypeEdit, popupTypeNewCard */
+const editFormValidator = new FormValidator(popupClassesObject, popupTypeEdit);
+editFormValidator.enableValidation();
+
+const cardFormValidator = new FormValidator(popupClassesObject, popupTypeNewCard);
+cardFormValidator.enableValidation();
+
+
+export {
+    FormValidator,
+    editFormValidator,
+    cardFormValidator,
+};
