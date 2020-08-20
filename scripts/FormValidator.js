@@ -1,9 +1,3 @@
-import { 
-    popupTypeEdit,
-    popupTypeNewCard,
-    popupClassesObject
-} from './constants.js';
-
 class FormValidator {
     constructor(defaultFormConfig, formElement){
         this._formSelector = defaultFormConfig.formSelector;
@@ -106,16 +100,4 @@ class FormValidator {
         } 
 }
 
-/* popupTypeEdit, popupTypeNewCard */
-const editFormValidator = new FormValidator(popupClassesObject, popupTypeEdit);
-editFormValidator.enableValidation();
-
-const cardFormValidator = new FormValidator(popupClassesObject, popupTypeNewCard);
-cardFormValidator.enableValidation();
-
-
-export {
-    FormValidator,
-    editFormValidator,
-    cardFormValidator,
-};
+export{FormValidator};

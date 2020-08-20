@@ -31,6 +31,9 @@ const popupCloseBigImgButton = popupOpenBigImg.querySelector('.popup__close-butt
 const popupBigImg = popupOpenBigImg.querySelector('.popup__img');
 const popupBigImgFigCapture = popupOpenBigImg.querySelector('.popup__figcaption');
 
+// Добавляем в DOM
+const cardList = document.querySelector('.elements__list');
+
 //Default array of initial data
 const initialCards = [
     {
@@ -91,6 +94,7 @@ export {
     popupCloseBigImgButton,
     popupBigImg,
     popupBigImgFigCapture,
+    cardList,
     initialCards,
     popupClassesObject
 }; 

@@ -15,26 +15,29 @@ import {
     inputCardLink,
     popupOpenBigImg,
     popupCloseBigImgButton,
-    initialCards
+    cardList,
+    initialCards,
+    popupClassesObject
 } from './constants.js';
 
 import {
     addAnyWindow,
+    inputsValuesInProfile,
     removeAnyWindow,
-    inputsValuesInProfile
 } from './utils.js';
 
 import {Card} from './Card.js';
 
-//Initialising inputs conditions for editProfilePopup
-function editPopupInputsCondition (popupTypeEdit) {
-    if(popupTypeEdit.classList.contains('popup_opened')){
-         //Take an exsiting values of profile;
-        inputsValuesInProfile();
-    }
-    //Just to close popup
-    removeAnyWindow(popupTypeEdit);
-}
+import {FormValidator} from './FormValidator.js';
+
+
+//Creation of new object of FormValidator class
+const editFormValidator = new FormValidator(popupClassesObject, popupTypeEdit);
+editFormValidator.enableValidation();
+
+const cardFormValidator = new FormValidator(popupClassesObject, popupTypeNewCard);
+cardFormValidator.enableValidation();
+
 
 //Function of renaming of prfile
 function formEditSubmitHandler(evt) {
@@ -42,9 +45,10 @@ function formEditSubmitHandler(evt) {
     //whrite values from inputs
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
-    //Check the input conditions
-    editPopupInputsCondition(popupTypeEdit);
+    //Just to close popup
+    removeAnyWindow(popupTypeEdit);
 }
+
 
 //Function of additon of new cards
 function formAddSubmitHandler(evt) {
@@ -64,8 +68,6 @@ function renderCards(initialCards){
 initialCards.forEach((data) => {
     const card = new Card(data, '.elements__element-template');
     const cardElement = card.generateCard(); //we have got here an upgraded element from generateCard() to insert it in Class List
-    // Добавляем в DOM
-    const cardList = document.querySelector('.elements__list');
     cardList.prepend(cardElement);
 });
 }
@@ -74,8 +76,9 @@ renderCards(initialCards);
 
 //BELOW BUTTONS ACTIONS
 //Add Popup
-openAddCardButton.addEventListener('click', () => {
+openAddCardButton.addEventListener('click', () => {  //CHECk tomorrow with fresh head
     addAnyWindow(popupTypeNewCard);
+    cardFormValidator.popupFormReset();
 });
 //Remove Popup
 popupCardCloseButton.addEventListener('click', () => {
@@ -85,26 +88,22 @@ popupCardCloseButton.addEventListener('click', () => {
 popupAddCardForm.addEventListener('submit', formAddSubmitHandler);
 
 //For Edit Popup
-profileEditButton.addEventListener('click', () => {
+profileEditButton.addEventListener('click', () => {    //CHECk tomorrow with fresh head
     addAnyWindow(popupTypeEdit);
+    editFormValidator.popupFormReset();
+    //Check the input conditions. Initialising inputs conditions for editProfilePopup
+    if (popupTypeEdit.classList.contains('popup_opened')){
+     //Take an exsiting values of profile;
+    inputsValuesInProfile();
+    }
 });
 popupCloseButton.addEventListener('click', () => {
     removeAnyWindow(popupTypeEdit);
 });
 
-popupEditForm.addEventListener('submit',formEditSubmitHandler);
+popupEditForm.addEventListener('submit', formEditSubmitHandler);
 
 //For Image Popup
 popupCloseBigImgButton.addEventListener('click', () => {
     removeAnyWindow(popupOpenBigImg);
 });
-
-
-
-
-
-
-
-
-
-

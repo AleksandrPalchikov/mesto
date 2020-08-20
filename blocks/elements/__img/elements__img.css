@@ -7,4 +7,12 @@
   object-fit: cover;
   box-sizing: border-box;
   border-radius: 10px 10px 0 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.elements__img:hover {
+  opacity: 0.6;
+}
+.elements__img:focus {
+  outline:transparent;
 }

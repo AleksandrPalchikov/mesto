@@ -19,10 +19,10 @@ _setEventListeners() {
     const cardDeliteButton = this._element.querySelector('.elements__trash');
     const cardImage = this._element.querySelector('.elements__img');
     //For every card - Like/Delete Button is ative  
-    cardLikeButton.addEventListener('click', (evt) => {this._handleLikeToggle(evt)});
-    cardDeliteButton.addEventListener('click', (evt) => {this._handleDeleteClosest(evt)});
+    cardLikeButton.addEventListener('click', () => {this._handleLikeToggle()});
+    cardDeliteButton.addEventListener('click', () => {this._handleDeleteClosest()});
     //Image like button or image Popup
-    cardImage.addEventListener('click',(evt) => {this._handleImageClick(evt)});
+    cardImage.addEventListener('click',() => {this._handleImageClick()});
 }
 
 //Get template from HTML. Now we can get different template thanks to _cardDelector. We just can change class in a render class
@@ -49,20 +49,23 @@ generateCard(){
 }
 
 //Function that make certan like(in certain card) an aktive/default
-_handleLikeToggle(evt) {
-    evt.target.classList.toggle('elements_like_aktive');
+_handleLikeToggle() {
+    this._element.querySelector('.elements__like').classList.toggle('elements_like_aktive');
 };
-//Function that delete certain card
-_handleDeleteClosest(evt) {
-    evt.target.closest('.elements__element').remove();
-};
+
 //Function - values for 3rd Popup. Take image from card and putt it in ImgPopup
-_handleImageClick(evt){
+_handleImageClick(){
     addAnyWindow(popupOpenBigImg);
-    popupBigImg.src = evt.target.src;
-    popupBigImgFigCapture.textContent = evt.target.closest('.elements__element').querySelector('.elements__title').textContent;
-    popupBigImg.alt = evt.target.alt;
-};
+    popupBigImg.src = this._element.querySelector('.elements__img').src;
+    popupBigImgFigCapture.textContent = this._element.querySelector('.elements__title').textContent;
+    popupBigImg.alt = this._element.querySelector('.elements__img').alt;
+}
+
+//Function that delete certain card. We need to put null this element, because this._element doesn't exist
+_handleDeleteClosest() {
+    this._element.remove();
+    this._element = null;
+}
 } 
 
 export {Card};
