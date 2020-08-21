@@ -56,9 +56,10 @@ _handleLikeToggle() {
 //Function - values for 3rd Popup. Take image from card and putt it in ImgPopup
 _handleImageClick(){
     addAnyWindow(popupOpenBigImg);
-    popupBigImg.src = this._element.querySelector('.elements__img').src;
+    const cardImage = this._element.querySelector('.elements__img');
+    popupBigImg.src = cardImage.src;
+    popupBigImg.alt = cardImage.alt;
     popupBigImgFigCapture.textContent = this._element.querySelector('.elements__title').textContent;
-    popupBigImg.alt = this._element.querySelector('.elements__img').alt;
 }
 
 //Function that delete certain card. We need to put null this element, because this._element doesn't exist

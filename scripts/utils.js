@@ -2,7 +2,7 @@ import {
     profileName,
     profileJob,
     inputName,
-    inputJob,
+    inputJob
 } from './constants.js';
 
 import {} from './FormValidator.js';

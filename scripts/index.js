@@ -23,7 +23,7 @@ import {
 import {
     addAnyWindow,
     inputsValuesInProfile,
-    removeAnyWindow,
+    removeAnyWindow
 } from './utils.js';
 
 import {Card} from './Card.js';
@@ -76,7 +76,7 @@ renderCards(initialCards);
 
 //BELOW BUTTONS ACTIONS
 //Add Popup
-openAddCardButton.addEventListener('click', () => {  //CHECk tomorrow with fresh head
+openAddCardButton.addEventListener('click', () => {
     addAnyWindow(popupTypeNewCard);
     cardFormValidator.popupFormReset();
 });
@@ -88,7 +88,7 @@ popupCardCloseButton.addEventListener('click', () => {
 popupAddCardForm.addEventListener('submit', formAddSubmitHandler);
 
 //For Edit Popup
-profileEditButton.addEventListener('click', () => {    //CHECk tomorrow with fresh head
+profileEditButton.addEventListener('click', () => {
     addAnyWindow(popupTypeEdit);
     editFormValidator.popupFormReset();
     //Check the input conditions. Initialising inputs conditions for editProfilePopup
@@ -107,3 +107,5 @@ popupEditForm.addEventListener('submit', formEditSubmitHandler);
 popupCloseBigImgButton.addEventListener('click', () => {
     removeAnyWindow(popupOpenBigImg);
 });
+
+//Thanks for review - Anton
