@@ -34,8 +34,10 @@ editFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(popupClassesObject, popupTypeNewCard);
 cardFormValidator.enableValidation();
 
-const callPopupEdit = new Popup(popupTypeEdit); // class PopupForm
-const callPopupAddCard = new Popup(popupTypeNewCard); // class PopupForm
+const callPopupEdit = new Popup(popupTypeEdit); //  will be class PopupForm
+const callPopupAddCard = new Popup(popupTypeNewCard); //will be  class PopupForm
+
+//HELP AREA !!!!!!!!!!!!!!!!!!!!!!!
 const callPopupOpenBigImage = new PopupWithImage(popupOpenBigImg); // class Popupimage
 
 //Insertion cards from Array in a cardList.
@@ -80,7 +82,7 @@ function formAddSubmitHandler(evt) {
     inputCardLink.value ='';
 }
 
-//HELP AREA !!!!!!!!!!!!!!!!!!!!
+//HELP AREA !!!!!!!!!!!!!!!!!!!!!!!
 const cardForImagePopup = new Card({
     data: initialCards,
     handlCardclick: (cardData) => {
