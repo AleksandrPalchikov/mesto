@@ -51,7 +51,7 @@ class FormValidator {
         
     _toggleButtonState(inputs, submitButtons) {
         // It was checked all inputElements via isFormValid. 
-        //Depending on the isFormInValid function it will be add or remove inactive class(CSS) + disabled label for    SUBMITBUTTON
+        //Depending on the isFormInValid function it will be add or remove inactive class(CSS) + disabled label for SUBMITBUTTON
         if (this._isFormInValid(inputs)) {
             this._popupButtonDisabled(submitButtons);
         } else {

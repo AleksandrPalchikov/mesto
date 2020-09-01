@@ -1,11 +1,6 @@
 import {/*addAnyWindow*/} from './utils.js';
 import {/*callPopupOpenBigImage*/} from './index.js';
-
-import {
-    popupOpenBigImg,
-    popupBigImg,
-    popupBigImgFigCapture
-} from './constants.js';
+import {} from './constants.js';
 
 class Card {
     constructor ({data, handlCardclick}, cardSelector) {

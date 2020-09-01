@@ -1,4 +1,5 @@
- class Section {
+//Insert cards from Array and AddCardPopup in containerSelector
+class Section {
     constructor({items, renderer}, containerSelector){
     this._renderedItems = items;
     this._renderer = renderer;

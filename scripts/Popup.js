@@ -24,7 +24,6 @@ class Popup{
 
     _handleOverlayClose(evt){
         const popupEditForm = this._popup.querySelector('.popup__form');
-        console.log(popupEditForm)
         /*const popupBigImg = popupOpenBigImg.querySelector('.popup__img');*/ //!!!!!!!!!!!!!!!!
     if (this._popup.classList.contains('popup_opened' && popupEditForm)){
         this.close(this._popup);

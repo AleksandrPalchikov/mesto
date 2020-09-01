@@ -26,6 +26,7 @@ import {Card} from './Card.js';
 import {Section} from './Section.js';
 import {FormValidator} from './FormValidator.js';
 import {PopupWithImage} from './PopupWithImage.js';
+import {PopupWithForm} from './PopupWithForm.js';
 
 //Creation of new object of FormValidator class
 const editFormValidator = new FormValidator(popupClassesObject, popupTypeEdit);
@@ -34,10 +35,8 @@ editFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(popupClassesObject, popupTypeNewCard);
 cardFormValidator.enableValidation();
 
-const callPopupEdit = new Popup(popupTypeEdit); //  will be class PopupForm
-const callPopupAddCard = new Popup(popupTypeNewCard); //will be  class PopupForm
-
-//HELP AREA !!!!!!!!!!!!!!!!!!!!!!!
+const callPopupEdit = new Popup(popupTypeEdit); //  will be class PopupWithForm
+const callPopupAddCard = new Popup(popupTypeNewCard); //will be class PopupWithForm
 const callPopupOpenBigImage = new PopupWithImage(popupOpenBigImg); // class Popupimage
 
 //Insertion cards from Array in a cardList.
@@ -46,7 +45,7 @@ const sectionList = new Section({
     renderer: (item) => {
             const card = new Card({
                 data: item,
-                handlCardclick: () => {}
+                handlCardclick: (cardData) => {callPopupOpenBigImage.open(cardData)}
             }, '.elements__element-template');
             const cardElement = card.generateCard();
             //we have got here an upgraded element from generateCard() to insert it in Class List
@@ -68,7 +67,7 @@ function formAddSubmitHandler(evt) {
         renderer: (item) => {
                 const card = new Card({
                     data: item,
-                    handlCardclick: () => {}
+                    handlCardclick: (cardData) => {callPopupOpenBigImage.open(cardData)}
                 }, '.elements__element-template');
                 const cardElement = card.generateCard();
                 //we have got here an upgraded element from generateCard() to insert it in Class List
@@ -82,15 +81,6 @@ function formAddSubmitHandler(evt) {
     inputCardLink.value ='';
 }
 
-//HELP AREA !!!!!!!!!!!!!!!!!!!!!!!
-const cardForImagePopup = new Card({
-    data: initialCards,
-    handlCardclick: (cardData) => {
-        callPopupOpenBigImage.open(cardData)
-    } 
-}, '.elements__element-template');
-
-
 //Function of renaming of prfile
 function formEditSubmitHandler(evt) {
     evt.preventDefault();
@@ -101,7 +91,6 @@ function formEditSubmitHandler(evt) {
     callPopupEdit.close();
 }
 
-//BELOW BUTTONS ACTIONS
 //Add Popup
 openAddCardButton.addEventListener('click', () => {
     callPopupAddCard.open();
@@ -109,6 +98,8 @@ openAddCardButton.addEventListener('click', () => {
 });
 
 popupAddCardForm.addEventListener('submit', formAddSubmitHandler);
+
+
 
 //For Edit Popup
 profileEditButton.addEventListener('click', () => {
