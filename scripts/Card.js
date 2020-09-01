@@ -1,4 +1,5 @@
-import {addAnyWindow} from './utils.js';
+import {/*addAnyWindow*/} from './utils.js';
+import {/*callPopupOpenBigImage*/} from './index.js';
 
 import {
     popupOpenBigImg,
@@ -7,8 +8,9 @@ import {
 } from './constants.js';
 
 class Card {
-    constructor (data, cardSelector) {
+    constructor ({data, handlCardclick}, cardSelector) {
     this._cardSelector = cardSelector;
+    this._handlCardclick = handlCardclick;
     this._name = data.name;
     this._link = data.link;
 }
@@ -22,7 +24,12 @@ _setEventListeners() {
     cardLikeButton.addEventListener('click', () => {this._handleLikeToggle()});
     cardDeliteButton.addEventListener('click', () => {this._handleDeleteClosest()});
     //Image like button or image Popup
-    cardImage.addEventListener('click',() => {this._handleImageClick()});
+    cardImage.addEventListener('click',() => {this._handlCardclick({
+        name: cardImage.alt,
+        link: cardImage.src,
+        subscription: this._element.querySelector('.elements__title').textContent
+    }
+    )});    
 }
 
 //Get template from HTML. Now we can get different template thanks to _cardDelector. We just can change class in a render class
@@ -34,16 +41,15 @@ _getTemplate() {
 
 // Rewhriting values from InitialCard(dataBank) or from NewCard inputs into Template
 generateCard(){
-    this._element = this._getTemplate();
-    this._setEventListeners();       
+    this._element = this._getTemplate();      
     //All indsides from template we wan to make actions
     const cardImage = this._element.querySelector('.elements__img');
     const cardTitle = this._element.querySelector('.elements__title');
-
     //Rendering/actions/changes
     cardImage.src = this._link;
     cardImage.alt = this._name;
     cardTitle.textContent = this._name;
+    this._setEventListeners(); 
     //Returning an upgraded element
     return this._element;
 }
@@ -52,15 +58,6 @@ generateCard(){
 _handleLikeToggle() {
     this._element.querySelector('.elements__like').classList.toggle('elements_like_aktive');
 };
-
-//Function - values for 3rd Popup. Take image from card and putt it in ImgPopup
-_handleImageClick(){
-    addAnyWindow(popupOpenBigImg);
-    const cardImage = this._element.querySelector('.elements__img');
-    popupBigImg.src = cardImage.src;
-    popupBigImg.alt = cardImage.alt;
-    popupBigImgFigCapture.textContent = this._element.querySelector('.elements__title').textContent;
-}
 
 //Function that delete certain card. We need to put null this element, because this._element doesn't exist
 _handleDeleteClosest() {
