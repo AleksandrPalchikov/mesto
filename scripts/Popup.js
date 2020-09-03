@@ -18,22 +18,20 @@ class Popup{
 
     _handleEscClose(evt){
         if (evt.key === 'Escape' && this._popup.classList.contains('popup_opened')) {
-            this.close(this._popup);
+            this.close();
     }
 }
 
-    _handleOverlayClose(evt){
-        const popupEditForm = this._popup.querySelector('.popup__form');
-        /*const popupBigImg = popupOpenBigImg.querySelector('.popup__img');*/ //!!!!!!!!!!!!!!!!
-    if (this._popup.classList.contains('popup_opened' && popupEditForm)){
-        this.close(this._popup);
+    _handleOverlayClose(){
+    if (event.target === event.currentTarget){
+        this.close();
     }
 }
 
     _setEventListeners(){
         const anyPopupCloseButton = this._popup.querySelector('.popup__close-button');
         anyPopupCloseButton.addEventListener('click', () => {
-        this.close(this._popup);
+        this.close();
     });
 }
 }

@@ -17,6 +17,7 @@
   .profile__description {
     font-size: 14px;
     line-height: 17px;
+    align-self: center;
     text-align: center;
   }
 }

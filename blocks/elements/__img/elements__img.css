@@ -12,7 +12,8 @@
 
 .elements__img:hover {
   opacity: 0.6;
-}
+} 
+
 .elements__img:focus {
   outline:transparent;
 }

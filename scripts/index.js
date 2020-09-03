@@ -3,49 +3,34 @@ import {
     profileJob,
     profileEditButton,
     popupTypeEdit,
-    popupEditForm,
-    popupCloseButton,
-    inputName,
-    inputJob,
     openAddCardButton,
     popupTypeNewCard,
-    popupCardCloseButton,
-    popupAddCardForm,
-    inputCardName,
-    inputCardLink,
     popupOpenBigImg,
-    popupCloseBigImgButton,
     cardList,
     initialCards,
     popupClassesObject
 } from './constants.js';
-
-import {/**/} from './utils.js';
-import {Popup} from './Popup.js';
 import {Card} from './Card.js';
 import {Section} from './Section.js';
 import {FormValidator} from './FormValidator.js';
 import {PopupWithImage} from './PopupWithImage.js';
 import {PopupWithForm} from './PopupWithForm.js';
+import {UserInfo} from './UserInfo.js';
 
-//Creation of new object of FormValidator class
+//Creation of two new objects of FormValidator class for two popups with forms
 const editFormValidator = new FormValidator(popupClassesObject, popupTypeEdit);
 editFormValidator.enableValidation();
-
 const cardFormValidator = new FormValidator(popupClassesObject, popupTypeNewCard);
 cardFormValidator.enableValidation();
-
-const callPopupEdit = new Popup(popupTypeEdit); //  will be class PopupWithForm
-const callPopupAddCard = new Popup(popupTypeNewCard); //will be class PopupWithForm
-const callPopupOpenBigImage = new PopupWithImage(popupOpenBigImg); // class Popupimage
-
-//Insertion cards from Array in a cardList.
+//Child Object of Popup class for popup with Image (without form) 
+const callPopupOpenBigImage = new PopupWithImage(popupOpenBigImg);
+//INCERTION CARD ALGORITHM from Array with images in a cardList - initial operation.
 const sectionList = new Section({
     items: initialCards,
     renderer: (item) => {
             const card = new Card({
                 data: item,
-                handlCardclick: (cardData) => {callPopupOpenBigImage.open(cardData)}
+                handlCardclick:(cardData) => {callPopupOpenBigImage.open(cardData)} //rewrite values from card in imgPopup
             }, '.elements__element-template');
             const cardElement = card.generateCard();
             //we have got here an upgraded element from generateCard() to insert it in Class List
@@ -54,65 +39,60 @@ const sectionList = new Section({
     }, cardList);
 sectionList.redererItem()
 
+//1. Collection inputs values from addCardPopup and SUNBMIT(via callback), 2. then creation of Card to insert it in cardList
+const callPopupAddCard = new PopupWithForm({
+    handleSubmitForm: (formData) => {
+        //INCERTION CARD ALGORITHM
+        const sectionList = new Section({
+            items: [formData],
+            renderer: (item) => {
+                    const card = new Card({
+                        data: item,
+                        handlCardclick: (cardData) => {callPopupOpenBigImage.open(cardData)}
+                    }, '.elements__element-template');
+                    const cardElement = card.generateCard();
+                    //we have got here an upgraded element from generateCard() to insert it in Class List
+                    sectionList.addItem(cardElement);
+                }
+            }, cardList);
 
-//Function of additon of new cards
-function formAddSubmitHandler(evt) {
-    evt.preventDefault();
+        sectionList.redererItem();
+        callPopupAddCard.close();
+        }
+}, popupTypeNewCard);
 
-    const sectionList = new Section({
-        items: [{
-            name: inputCardName.value,
-            link: inputCardLink.value
-        }],
-        renderer: (item) => {
-                const card = new Card({
-                    data: item,
-                    handlCardclick: (cardData) => {callPopupOpenBigImage.open(cardData)}
-                }, '.elements__element-template');
-                const cardElement = card.generateCard();
-                //we have got here an upgraded element from generateCard() to insert it in Class List
-                sectionList.addItem(cardElement);
-            }
-        }, cardList);
-
-    sectionList.redererItem();
-    callPopupAddCard.close();
-    inputCardName.value = '';
-    inputCardLink.value ='';
-}
-
-//Function of renaming of prfile
-function formEditSubmitHandler(evt) {
-    evt.preventDefault();
-    //write values from inputs
-    profileName.textContent = inputName.value;
-    profileJob.textContent = inputJob.value;
-    //Just to close popup
-    callPopupEdit.close();
-}
-
-//Add Popup
+//Open AddPopup and Check validity
 openAddCardButton.addEventListener('click', () => {
     callPopupAddCard.open();
     cardFormValidator.popupFormReset();
 });
 
-popupAddCardForm.addEventListener('submit', formAddSubmitHandler);
+callPopupAddCard.setEventListeners();
 
+//1. Collection inputs values from editProfilePopup and SUNBMIT(callback) 2. then insertion inputs values it in webPage through UserInfo Claass
+const callPopupEdit = new PopupWithForm({
+    handleSubmitForm: (formData) => {
+    const userInfo = new UserInfo({
+            userName: formData.name,
+            userDescription: formData.job
+        });
+    //write values from inputs    
+    userInfo.setUserInfo();
+    callPopupEdit.close();
+}
+}, popupTypeEdit);
 
-
-//For Edit Popup
+//Open editPopup, make a validation 
 profileEditButton.addEventListener('click', () => {
-    callPopupEdit.open();
     editFormValidator.popupFormReset();
-    //Check the input conditions. Initialising inputs conditions for editProfilePopup
-    if (popupTypeEdit.classList.contains('popup_opened')){
-     //Take an exsiting values of profile;
-        inputName.value = profileName.textContent;
-        inputJob.value = profileJob.textContent;
-    }
-});
+    callPopupEdit.open();
+    // Rewrite onPage values in inputs while opening of editPopup
+    const userInfo = new UserInfo({
+        userName: profileName.textContent,
+        userDescription: profileJob.textContent
+    });
+    userInfo.getUserInfo();
 
+});  
 
-popupEditForm.addEventListener('submit', formEditSubmitHandler);
-
+callPopupEdit.setEventListeners();
