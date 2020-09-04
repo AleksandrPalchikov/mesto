@@ -1,7 +1,3 @@
-import {/*addAnyWindow*/} from './utils.js';
-import {/*callPopupOpenBigImage*/} from './index.js';
-import {} from './constants.js';
-
 //gives life to the Card. Make the Card live:)
 class Card {
     constructor ({data, handlCardclick}, cardSelector) {

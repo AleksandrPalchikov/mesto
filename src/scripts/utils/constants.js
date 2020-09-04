@@ -1,5 +1,3 @@
-
-
 //Consts for Edit-Button(1st)
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__title');

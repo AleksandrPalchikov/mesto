@@ -4,7 +4,7 @@ profileJob,
 popupTypeEdit,
 inputName,
 inputJob
-} from './constants.js';
+} from '../utils/constants.js';
 
 //Wright new inputs values - we get new values via callback handleSubmitForm function from callEditForm class
 class UserInfo {

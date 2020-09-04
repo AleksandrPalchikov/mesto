@@ -9,13 +9,15 @@ import {
     cardList,
     initialCards,
     popupClassesObject
-} from './constants.js';
-import {Card} from './Card.js';
-import {Section} from './Section.js';
-import {FormValidator} from './FormValidator.js';
-import {PopupWithImage} from './PopupWithImage.js';
-import {PopupWithForm} from './PopupWithForm.js';
-import {UserInfo} from './UserInfo.js';
+} from '../scripts/utils/constants.js';
+
+import './index.css';
+import {Card} from '../scripts/components/Card.js';
+import {Section} from '../scripts/components/Section.js';
+import {FormValidator} from '../scripts/components/FormValidator.js';
+import {PopupWithImage} from '../scripts/components/PopupWithImage.js';
+import {PopupWithForm} from '../scripts/components/PopupWithForm.js';
+import {UserInfo} from '../scripts/components/UserInfo.js';
 
 //Creation of two new objects of FormValidator class for two popups with forms
 const editFormValidator = new FormValidator(popupClassesObject, popupTypeEdit);
