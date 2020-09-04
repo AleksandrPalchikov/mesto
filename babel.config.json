@@ -10,10 +10,12 @@
                     "safari": "11.1",
                     "ie": "9"
                 },
-                "useBuiltIns": "usage",
-                "corejs": "3.6.4",
+                "useBuiltIns": "entry",
+                "corejs": "3.6.4"
             }
         ]
     ],
     "plugins": ["@babel/plugin-proposal-class-properties"]
 }
+
+//usage
