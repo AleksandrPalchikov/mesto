@@ -13,6 +13,6 @@ HTML;
 CSS;
 JS;
 
- ### Cсылa на GitHub Pages: https://github.com/AleksandrPalchikov/mesto/blob/master/dist/index.html
-
+ ### Cсылa на GitHub Pages: https://aleksandrpalchikov.github.io/mesto/index.html
+ 
 
