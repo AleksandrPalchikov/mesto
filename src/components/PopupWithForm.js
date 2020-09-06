@@ -23,14 +23,8 @@ class PopupWithForm extends Popup {
             evt.preventDefault();
             this._handleSubmitForm(this._getInputValues());
         });
-        super._setEventListeners();
+        super.setEventListeners();
     }
-
-    close(){
-        //it work without - "Перезаписывает родительский метод close, так как при закрытии попапа форма должна ещё и сбрасываться"
-        super.close();
-} 
-
 
 }
 

@@ -1,7 +1,5 @@
 //Consts for Edit-Button(1st)
 const profile = document.querySelector('.profile');
-const profileName = profile.querySelector('.profile__title');
-const profileJob = profile.querySelector('.profile__description');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 //and Edit-Popup
 const popupTypeEdit = document.querySelector('.popup_type_edit');
@@ -73,8 +71,6 @@ const popupClassesObject = {
 
 export { 
     profile,
-    profileName,
-    profileJob,
     profileEditButton,
     popupTypeEdit,
     popupEditForm,

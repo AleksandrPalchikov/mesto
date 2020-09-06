@@ -3,11 +3,12 @@ class Section {
     constructor({items, renderer}, containerSelector){
     this._renderedItems = items;
     this._renderer = renderer;
-    this._containerSelector = containerSelector;
+    this._containerSelector = document.querySelector(containerSelector);
     }
 
     redererItem(){
         this._renderedItems.forEach((item) => this._renderer(item));
+        console.log('render');
     }
 
     addItem(cardElement){

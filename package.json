@@ -4,7 +4,7 @@
   "description": "https://aleksandrpalchikov.github.io/mesto/index.html",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && webpack --mode-production",
+    "build": "rimraf dist && webpack --mode-production",
     "dev": "webpack-dev-server --open --watch ",
     "deploy": "npm run build && gh-pages -d dist"
   },
