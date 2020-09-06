@@ -5,8 +5,6 @@ import {
     popupTypeEdit,
     openAddCardButton,
     popupTypeNewCard,
-    popupOpenBigImg,
-    cardList,
     initialCards,
     popupClassesObject
 } from '../utils/constants.js';
@@ -26,15 +24,15 @@ editFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(popupClassesObject, popupTypeNewCard);
 cardFormValidator.enableValidation();
 //Child Object of Popup class for popup with Image (without form) 
-const callPopupOpenBigImage = new PopupWithImage('.popup_type_open-img'); //!!!
-callPopupOpenBigImage.setEventListeners();
+const popupOpenBigImage = new PopupWithImage('.popup_type_open-img'); //!!!
+popupOpenBigImage.setEventListeners();
 
-
-
-function cardClass(item){
+// "item" value: {name:..,link:..} from SectionList (fomim itialCards Array)
+// to render a Cards from Array or Card from input 
+function createCard(item){
     const card = new Card({
         data: item,
-        handlCardclick:(cardData) => {callPopupOpenBigImage.open(cardData)} //rewrite values from card in imgPopup
+        handlCardclick:(cardData) => {popupOpenBigImage.open(cardData)} //tranfer data from Card Class to imgPopup 
     }, '.elements__element-template');
     const cardElement = card.generateCard();
     //we have got here an upgraded element from generateCard() to insert it in Class List
@@ -45,62 +43,55 @@ function cardClass(item){
 const sectionList = new Section({
     items: initialCards,
     renderer: (item) => {
-        cardClass(item);
+        createCard(item);
         }
     }, '.elements__list');
 
-sectionList.redererItem();
+sectionList.renderInitialCards();
 
 //1. Collection inputs values from addCardPopup and SUNBMIT(via callback), 2. then creation of Card to insert it in cardList
-const callPopupAddCard = new PopupWithForm({
+const popupAddCard = new PopupWithForm({
     handleSubmitForm: (formData) => {
-        
-        //INCERTION CARD ALGORITHM
-        const sectionList = new Section({
-            items: [formData],
-            renderer: (item) => {
-                cardClass(item);
-                }
-            }, '.elements__list'); 
-
-        sectionList.redererItem();
-        callPopupAddCard.close();
+        //Method to render just one card with inputs values
+        sectionList.renderCardFromInputs(formData);
+        popupAddCard.close();
         }
 }, '.popup_type_add-card');
 
 //Open AddPopup and Check validity
 openAddCardButton.addEventListener('click', () => {
-    callPopupAddCard.open();
+    popupAddCard.open();
     cardFormValidator.popupFormReset();
 });
+//important: schould be made just one time (not putt this function in open Method) or will be exponential law with new cards x1x2x4....
+popupAddCard.setEventListeners();
 
-callPopupAddCard.setEventListeners();
-
-    //Rewrite onPage values in inputs while opening of editPopup
+    //create an userInfo image of UserInfo Class to create a object with Profile values
     const userInfo = new UserInfo({
         userNameSelector: '.profile__title',
         userDescriptionSelector: '.profile__description'
 });
 
-
-//1. Collection inputs values from editProfilePopup and SUNBMIT(callback) 2. then insertion inputs values it in webPage through UserInfo Claass
-const callPopupEdit = new PopupWithForm({
+//1. SUBMIT. Collection inputs values from editProfilePopup and SUNBMIT( viacallback) 
+//2. then insertion inputs values it in webPage through UserInfo Class
+const popupEdit = new PopupWithForm({
     handleSubmitForm: (formData) => {
-        //write values from inputs on page 
+        //rewrite values from inputs on page 
         userInfo.setUserInfo(formData.name, formData.job);
-        callPopupEdit.close();
+        popupEdit.close();
 }
 }, '.popup_type_edit');
 
-//Open editPopup, make a validation 
+//Open editPopup
 profileEditButton.addEventListener('click', () => {
+    //make a validation 
     editFormValidator.popupFormReset();
+    //find an Object with the latest Profile values
     const currentUserInfo = userInfo.getUserInfo();
+    //fill inputs with latest values feom object
     inputName.value = currentUserInfo.userName;
     inputJob.value = currentUserInfo.userDescription;
-    callPopupEdit.open();
 
-
+    popupEdit.open();
 });  
-
-callPopupEdit.setEventListeners();
+popupEdit.setEventListeners();
