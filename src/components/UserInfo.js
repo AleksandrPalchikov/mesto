@@ -1,11 +1,22 @@
 //Wright new inputs values - we get new values via callback handleSubmitForm function from callEditForm class
 class UserInfo {
-  constructor({ userNameSelector, userDescriptionSelector }) {
+  constructor({
+    userNameSelector,
+    userDescriptionSelector,
+    userAvatarSelector,
+  }) {
     this._userName = document.querySelector(userNameSelector);
     this._userDescription = document.querySelector(userDescriptionSelector);
+    this._userAvatar = document.querySelector(userAvatarSelector); //NEW
   }
 
-  //return previous values from WebPage
+  getAndSetUserInfoFromServer(lastProfileValuesFromServer) {
+    //NEU
+    this._userName.textContent = lastProfileValuesFromServer.name;
+    this._userDescription.textContent = lastProfileValuesFromServer.about;
+    this._userAvatar.src = lastProfileValuesFromServer.avatar;
+  }
+  //return previous values from WebPage in inputs
   getUserInfo() {
     //Take an exsiting values of profile and create an object {userName:..., userDescription:...} to call from
     //this object a values through getUserInfo().userName and getUserInfo().userDescription to fill the inputs
@@ -15,11 +26,15 @@ class UserInfo {
     };
   }
 
-  //write values from inputs to webpage
+  //write values from inputs to Webpage
   setUserInfo(name, job) {
     this._userName.textContent = name;
     this._userDescription.textContent = job;
+
+    //send name and job on server
   }
+
+  sendNewInputsValuesOnServer() {}
 }
 
 export { UserInfo };
