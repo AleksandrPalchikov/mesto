@@ -21,6 +21,7 @@ class Card {
     this._link = data.link;
     this._likeData = data.likes;
     this._cardId = data._id;
+    this._ownerId = data.owner._id; //Prove it // Owner of Card NEU to delete the trash element
   }
 
   // set Listeners inside the every card from Template or for NewCard
@@ -64,17 +65,31 @@ class Card {
     const cardImage = this._element.querySelector(".elements__img");
     const cardTitle = this._element.querySelector(".elements__title");
     const numberOfLikes = this._element.querySelector(".elements__like-number");
+    const trashElementOfCard = this._element.querySelector(".elements__trash");
+    console.log(trashElementOfCard);
     //Rendering/actions/changes
     cardImage.src = this._link;
     cardImage.alt = this._name;
     cardTitle.textContent = this._name;
     this._drawInitialLikes(numberOfLikes);
     this._setEventListeners();
+
+    //hiden th trash element of card, that wasn't createn dy me
+    //NEU
+    //Work
+    if (this._ownerId !== "fd6926d50c516142275b0660") {
+      trashElementOfCard.classList.add("elements__trash-hidden"); //.popup-trash-element-hidden{visibility: hidden}
+    } else {
+      //hidden element
+    }
+
     //Returning an upgraded element
     return this._element;
   }
 
   _drawInitialLikes(numberOfLikes) {
+    const cardLikeButton = this._element.querySelector(".elements__like");
+
     //draw the likes from Serever
     if (this._likeData) {
       numberOfLikes.textContent = this._likeData.length; //NEU
@@ -82,13 +97,11 @@ class Card {
       numberOfLikes.textContent = [].length; //NEU
     }
 
-    const cardLikeButton = this._element.querySelector(".elements__like");
     const isLikedBoolean = this._likeData.some((person) => {
-      person._id === "7ab42f4a-85b2-40b4-8955-f611d5ddf392";
+      console.log(person._id);
+      return person._id === "fd6926d50c516142275b0660";
     });
-
     console.log(isLikedBoolean); //(everytime - False)
-
     if (isLikedBoolean) {
       cardLikeButton.classList.add("elements_like_aktive");
     } else {
@@ -116,9 +129,9 @@ class Card {
 
   _isLiked() {
     //Click on like
-    const isLikedBoolean = this._data.likes.some(
-      (person) => person._id === "7ab42f4a-85b2-40b4-8955-f611d5ddf392"
-    );
+    const isLikedBoolean = this._data.likes.some((person) => {
+      return person._id === "fd6926d50c516142275b0660";
+    });
 
     console.log(isLikedBoolean);
 

@@ -12,8 +12,9 @@ class Section {
     });
   }
   //Method to render a one Card from Input
-  renderCardFromInputs(formData) {
-    this._renderer(formData);
+  renderCardFromInputs(newCardInfo) {
+    console.log(`NEW CARD InFO: ${newCardInfo}`);
+    this._renderer(newCardInfo);
   }
 
   addItem(cardElement) {

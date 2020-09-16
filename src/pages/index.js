@@ -101,8 +101,8 @@ function createCard(item) {
           },
         });
 
-        apiLike;
-        deleteMyLikeFromServer()
+        apiLike
+          .deleteMyLikeFromServer()
           .then((updatedCardInfo) => {
             card.deleteLike(updatedCardInfo);
           })
@@ -127,9 +127,19 @@ const popupAddCard = new PopupWithForm(
   {
     handleSubmitForm: (formData) => {
       //Method to render just one card with inputs values
-      sectionList.renderCardFromInputs(formData); ///!!!!!
+      /* sectionList.renderCardFromInputs(formData); ///!!!!! */
       console.log(formData);
-      apiCards.addNewCardOnServer(formData);
+
+      apiCards
+        .addNewCardOnServer(formData)
+        .then((newCardInfo) => {
+          //INCERTION CARD ALGORITHM from Array with images in a cardList from server - initial operation.
+          sectionList.renderCardFromInputs(newCardInfo);
+        })
+        .catch((err) => {
+          console.log(`Ошибка. Запрос не выполнен ${err.status}`);
+        });
+
       popupAddCard.close();
     },
   },

@@ -60,9 +60,8 @@ class Api {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name: formData.name,
         link: formData.link,
-        likes: [],
+        name: formData.name,
       }),
     }).then((res) => {
       if (res.ok) {
