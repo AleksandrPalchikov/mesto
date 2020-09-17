@@ -32,10 +32,11 @@ class Card {
 
     //For every card - Like/Delete Button is ative
     cardLikeButton.addEventListener("click", () => {
-      this._isLiked();
+      this._putOrDeleteLike();
     });
     cardDeliteButton.addEventListener("click", () => {
-      this._handleDeleteClosest();
+      //just to transfer id in API area
+      this._handleDeleteIconClick(this._cardId);
     });
 
     //Image like button or image Popup
@@ -64,88 +65,67 @@ class Card {
     //All indsides from template we wan to make actions
     const cardImage = this._element.querySelector(".elements__img");
     const cardTitle = this._element.querySelector(".elements__title");
-    const numberOfLikes = this._element.querySelector(".elements__like-number");
     const trashElementOfCard = this._element.querySelector(".elements__trash");
     console.log(trashElementOfCard);
     //Rendering/actions/changes
     cardImage.src = this._link;
     cardImage.alt = this._name;
     cardTitle.textContent = this._name;
-    this._drawInitialLikes(numberOfLikes);
     this._setEventListeners();
 
-    //hiden th trash element of card, that wasn't createn dy me
-    //NEU
-    //Work
-    if (this._ownerId !== "fd6926d50c516142275b0660") {
-      trashElementOfCard.classList.add("elements__trash-hidden"); //.popup-trash-element-hidden{visibility: hidden}
-    } else {
-      //hidden element
-    }
-
-    //Returning an upgraded element
-    return this._element;
+    this.updateLikesArea(this._likeData);
+    this._deleteButtonVisibility(); //hiden th trash element of card, that wasn't createn dy me
+    return this._element; //Returning an upgraded element
   }
 
-  _drawInitialLikes(numberOfLikes) {
-    const cardLikeButton = this._element.querySelector(".elements__like");
-
-    //draw the likes from Serever
-    if (this._likeData) {
-      numberOfLikes.textContent = this._likeData.length; //NEU
-    } else {
-      numberOfLikes.textContent = [].length; //NEU
+  //Make visible trash button JUST for my cards
+  _deleteButtonVisibility() {
+    const trashElementOfCard = this._element.querySelector(".elements__trash");
+    if (this._ownerId !== "fd6926d50c516142275b0660") {
+      trashElementOfCard.classList.add("elements__trash-hidden");
     }
+  }
 
-    const isLikedBoolean = this._likeData.some((person) => {
-      console.log(person._id);
+  //override value of LIKE. Hier Like Array is changing and Mew render is making with new values
+  updateLikesArea(someLikeArray) {
+    console.log(someLikeArray);
+    /* console.log(`updateLikesArea ${someLikeArray}`); */
+    this._isLiked = someLikeArray.some((person) => {
       return person._id === "fd6926d50c516142275b0660";
     });
-    console.log(isLikedBoolean); //(everytime - False)
-    if (isLikedBoolean) {
+    this._renderLikesNumber(someLikeArray.length);
+    this._renderLikeBtn(this._isLiked);
+  }
+
+  _renderLikesNumber(arrayLength) {
+    //To Draw the cards
+    console.log("_renderLikesNumber");
+    const numberOfLikes = this._element.querySelector(".elements__like-number");
+    numberOfLikes.textContent = arrayLength;
+  }
+
+  _renderLikeBtn(isLiked) {
+    console.log("_renderLikeBtn");
+    const cardLikeButton = this._element.querySelector(".elements__like");
+    if (isLiked) {
       cardLikeButton.classList.add("elements_like_aktive");
     } else {
       cardLikeButton.classList.remove("elements_like_aktive");
+      /* this._isLiked = !this._isLiked; */
     }
   }
 
-  putLike(updatedCardInfo) {
-    //Update Server and Draw new Value
-    const cardLikeButton = this._element.querySelector(".elements__like");
-    const numberOfLikes = this._element.querySelector(".elements__like-number");
-    numberOfLikes.textContent = updatedCardInfo.likes.length;
-    cardLikeButton.classList.add("elements_like_aktive");
-    //Info from Server after put like
-  }
-
-  deleteLike(updatedCardInfo) {
-    //Update Server and Draw new Value
-    const cardLikeButton = this._element.querySelector(".elements__like");
-    const numberOfLikes = this._element.querySelector(".elements__like-number");
-    numberOfLikes.textContent = updatedCardInfo.likes.length;
-    cardLikeButton.classList.remove("elements_like_aktive");
-    //Info from Server after delete like
-  }
-
-  _isLiked() {
-    //Click on like
-    const isLikedBoolean = this._data.likes.some((person) => {
-      return person._id === "fd6926d50c516142275b0660";
-    });
-
-    console.log(isLikedBoolean);
-
-    if (isLikedBoolean) {
+  //Call differend Methods Depending on the like status
+  _putOrDeleteLike() {
+    if (this._isLiked) {
       this._handleDeleteLikeClick(this._cardId);
-      //DELETE FROM SERVER  - in CallBack to Delete
     } else {
       this._handleLikeClick(this._cardId);
-      //Put on SERVER  - in CallBack to PUT on server
     }
   }
 
   //Function that delete certain card. We need to put null this element, because this._element doesn't exist
-  _handleDeleteClosest() {
+  handleDeleteClosest() {
     document.querySelector(".popup").classList.add(".popup_type_delete-card");
     this._element.remove();
     this._element = null;

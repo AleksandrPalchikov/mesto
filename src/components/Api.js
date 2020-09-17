@@ -76,22 +76,21 @@ class Api {
   //_____________________________
   //Delete card from server
 
-  removeCardFromServer(id) {
-    /*   return fetch(this._baseUrl, {
+  removeCardFromServer() {
+    return fetch(this._baseUrl, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
       if (res.ok) {
-        console.log(`Today addNewCardOnServer works, Bro ${res.status}`);
+        console.log(`Today removeCardFromServer works, Bro ${res.status}`);
         return res.json();
       } else {
         return Promise.reject(`Что-то пошло не так: ${res.status}`);
       }
-    }); */
+    });
   }
 
-  /* получить список всех карточек в виде массива (GET)
-добавить карточку (POST)
+  /*
 удалить карточку (DELETE)
 получить данные пользователя (GET)
 заменить данные пользователя (PATCH)
@@ -104,7 +103,7 @@ class Api {
       headers: this._headers,
     }).then((res) => {
       if (res.ok) {
-        console.log(`Today addNewCardOnServer works, Bro ${res.status}`);
+        console.log(`Today putNewLikeonServer works, Bro ${res.status}`);
         return res.json();
       } else {
         return Promise.reject(`Что-то пошло не так: ${res.status}`);
@@ -119,7 +118,7 @@ class Api {
       headers: this._headers,
     }).then((res) => {
       if (res.ok) {
-        console.log(`Today addNewCardOnServer works, Bro ${res.status}`);
+        console.log(`Today deleteMyLikeFromServer works, Bro ${res.status}`);
         return res.json();
       } else {
         return Promise.reject(`Что-то пошло не так: ${res.status}`);

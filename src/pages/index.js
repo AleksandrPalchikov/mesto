@@ -13,6 +13,7 @@ import { Section } from "../components/Section.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupWithSubmitDel } from "../components/PopupWithSubmitDel";
 import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 
@@ -73,6 +74,7 @@ function createCard(item) {
       handleCardclick: (cardData) => {
         popupOpenBigImage.open(cardData);
       },
+
       handleLikeClick: (id) => {
         const apiLike = new Api({
           baseUrl: `https://mesto.nomoreparties.co/v1/cohort-15/cards/likes/${id}`, //3
@@ -86,12 +88,15 @@ function createCard(item) {
         apiLike
           .putNewLikeonServer()
           .then((updatedCardInfo) => {
-            card.putLike(updatedCardInfo);
+            console.log(`PUT ON SER ${updatedCardInfo.likes}`);
+
+            card.updateLikesArea(updatedCardInfo.likes); //DONT'T WORK
           })
           .catch((err) => {
             console.log(`Ошибка. Запрос не выполнен ${err.status}`);
           });
       },
+
       handleDeleteLikeClick: (id) => {
         const apiLike = new Api({
           baseUrl: `https://mesto.nomoreparties.co/v1/cohort-15/cards/likes/${id}`, //3
@@ -104,13 +109,45 @@ function createCard(item) {
         apiLike
           .deleteMyLikeFromServer()
           .then((updatedCardInfo) => {
-            card.deleteLike(updatedCardInfo);
+            console.log(`DEL FROM SER ${updatedCardInfo.likes}`);
+            card.updateLikesArea(updatedCardInfo.likes); //DONT'T WORK
           })
           .catch((err) => {
             console.log(`Ошибка. Запрос не выполнен ${err.status}`);
           });
       },
-      handleDeleteIconClick: () => {
+
+      handleDeleteIconClick: (id) => {
+        const popupConfirm = new PopupWithSubmitDel(
+          ".popup_type_delete-card"
+          /*".closeBtn!!!!!!!!!!!!" */
+        );
+
+        //All Actions after popup will be open
+
+        popupConfirm.setSubmitAction(() => {
+          const apiCards = new Api({
+            baseUrl: `https://mesto.nomoreparties.co/v1/cohort-15/cards/${id}`, //3
+            headers: {
+              authorization: "7ab42f4a-85b2-40b4-8955-f611d5ddf392",
+              "Content-Type": "application/json",
+            },
+          });
+
+          apiCards
+            .removeCardFromServer()
+            .then((updatedDataWithoutCard) => {
+              console.log(`updatedDataWithoutCard ${updatedDataWithoutCard}`);
+              /*card.handleDeleteClosest(); */
+              popupConfirm.close();
+            })
+            .catch((err) => {
+              console.log(`Ошибка. Запрос не выполнен ${err.status}`);
+            });
+        });
+
+        popupConfirm.open();
+
         /* ...что должно произойти при клике на удаление */
       },
     },
@@ -127,9 +164,6 @@ const popupAddCard = new PopupWithForm(
   {
     handleSubmitForm: (formData) => {
       //Method to render just one card with inputs values
-      /* sectionList.renderCardFromInputs(formData); ///!!!!! */
-      console.log(formData);
-
       apiCards
         .addNewCardOnServer(formData)
         .then((newCardInfo) => {
