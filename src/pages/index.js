@@ -33,6 +33,11 @@ const apiCards = new Api({
     "Content-Type": "application/json",
   },
 });
+// Создаём массив с промисами
+const initialPromisesArray = [apiProfileInfo, apiCards];
+// Передаём массив с промисами методу Promise.all
+Promise.all(initialPromisesArray).then((results) => {});
+
 //Initial Array of cards from Server
 apiCards
   .getInitialCards()
@@ -115,17 +120,18 @@ function createCard(item) {
       },
 
       handleDeleteIconClick: (id) => {
+        popupConfirm.setEventListeners();
         popupConfirm.setSubmitAction(() => {
           apiCards
             .removeCardFromServer(id)
             .then(() => card.handleDeleteClosest())
-            /*.then(() => delSubmitPopup.closePopup()) */
+            .then(() => popupConfirm.close())
             .catch((err) => {
               renderError(`Ошибка: ${err}`);
             });
         });
 
-        popupConfirm.open(); //WORK
+        popupConfirm.open();
       },
     },
     ".elements__element-template"

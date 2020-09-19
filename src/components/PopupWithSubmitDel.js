@@ -10,7 +10,7 @@ class PopupWithSubmitDel extends Popup {
     this._handleDeleteFormSubmit = submitActon;
   }
 
-  _setEventListeners() {
+  setEventListeners() {
     super.setEventListeners();
     this._formSubmit = this._popup.querySelector(".popup__form");
     this._formSubmit.addEventListener("submit", (evt) => {
