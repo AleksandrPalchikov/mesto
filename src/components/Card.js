@@ -66,7 +66,6 @@ class Card {
     const cardImage = this._element.querySelector(".elements__img");
     const cardTitle = this._element.querySelector(".elements__title");
     const trashElementOfCard = this._element.querySelector(".elements__trash");
-    console.log(trashElementOfCard);
     //Rendering/actions/changes
     cardImage.src = this._link;
     cardImage.alt = this._name;
@@ -88,8 +87,6 @@ class Card {
 
   //override value of LIKE. Hier Like Array is changing and Mew render is making with new values
   updateLikesArea(someLikeArray) {
-    console.log(someLikeArray);
-    /* console.log(`updateLikesArea ${someLikeArray}`); */
     this._isLiked = someLikeArray.some((person) => {
       return person._id === "fd6926d50c516142275b0660";
     });
@@ -99,13 +96,11 @@ class Card {
 
   _renderLikesNumber(arrayLength) {
     //To Draw the cards
-    console.log("_renderLikesNumber");
     const numberOfLikes = this._element.querySelector(".elements__like-number");
     numberOfLikes.textContent = arrayLength;
   }
 
   _renderLikeBtn(isLiked) {
-    console.log("_renderLikeBtn");
     const cardLikeButton = this._element.querySelector(".elements__like");
     if (isLiked) {
       cardLikeButton.classList.add("elements_like_aktive");

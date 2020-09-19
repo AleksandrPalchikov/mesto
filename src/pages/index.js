@@ -6,6 +6,8 @@ import {
   openAddCardButton,
   popupTypeNewCard,
   popupClassesObject,
+  avatarButton,
+  popupEditAvatar,
 } from "../utils/constants.js";
 import "./index.css";
 import { Card } from "../components/Card.js";
@@ -24,7 +26,6 @@ const apiProfileInfo = new Api({
     "Content-Type": "application/json",
   },
 });
-
 const apiCards = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-15/cards", //2
   headers: {
@@ -32,12 +33,21 @@ const apiCards = new Api({
     "Content-Type": "application/json",
   },
 });
-
+//Initial Array of cards from Server
 apiCards
   .getInitialCards()
   .then((cardsFromSerever) => {
     //INCERTION CARD ALGORITHM from Array with images in a cardList - initial operation.
     sectionList.renderInitialCards(cardsFromSerever);
+  })
+  .catch((err) => {
+    console.log(`Ошибка. Запрос не выполнен ${err.status}`);
+  });
+//Initial ProfileInfo of cards from Server
+apiProfileInfo
+  .loadingProfileInfoFromServer()
+  .then((lastProfileValuesFromServer) => {
+    userInfo.getAndSetUserInfoFromServer(lastProfileValuesFromServer);
   })
   .catch((err) => {
     console.log(`Ошибка. Запрос не выполнен ${err.status}`);
@@ -51,9 +61,17 @@ const cardFormValidator = new FormValidator(
   popupTypeNewCard
 );
 cardFormValidator.enableValidation();
+const addNewAvatarValidator = new FormValidator(
+  popupClassesObject,
+  popupEditAvatar
+);
+addNewAvatarValidator.enableValidation();
+
 //Child Object of Popup class for popup with Image (without form)
-const popupOpenBigImage = new PopupWithImage(".popup_type_open-img"); //!!!
+const popupOpenBigImage = new PopupWithImage(".popup_type_open-img");
 popupOpenBigImage.setEventListeners();
+
+const popupConfirm = new PopupWithSubmitDel(".popup_type_delete-card");
 
 //INCERTION CARD ALGORITHM from Array with images in a cardList - initial operation.
 const sectionList = new Section(
@@ -74,43 +92,22 @@ function createCard(item) {
       handleCardclick: (cardData) => {
         popupOpenBigImage.open(cardData);
       },
-
       handleLikeClick: (id) => {
-        const apiLike = new Api({
-          baseUrl: `https://mesto.nomoreparties.co/v1/cohort-15/cards/likes/${id}`, //3
-          headers: {
-            authorization: "7ab42f4a-85b2-40b4-8955-f611d5ddf392",
-            "Content-Type": "application/json",
-          },
-        });
-
         //send PUT request on server
-        apiLike
-          .putNewLikeonServer()
+        apiCards
+          .putNewLikeonServer(id)
           .then((updatedCardInfo) => {
-            console.log(`PUT ON SER ${updatedCardInfo.likes}`);
-
-            card.updateLikesArea(updatedCardInfo.likes); //DONT'T WORK
+            card.updateLikesArea(updatedCardInfo.likes);
           })
           .catch((err) => {
             console.log(`Ошибка. Запрос не выполнен ${err.status}`);
           });
       },
-
       handleDeleteLikeClick: (id) => {
-        const apiLike = new Api({
-          baseUrl: `https://mesto.nomoreparties.co/v1/cohort-15/cards/likes/${id}`, //3
-          headers: {
-            authorization: "7ab42f4a-85b2-40b4-8955-f611d5ddf392",
-            "Content-Type": "application/json",
-          },
-        });
-
-        apiLike
-          .deleteMyLikeFromServer()
+        apiCards
+          .deleteMyLikeFromServer(id)
           .then((updatedCardInfo) => {
-            console.log(`DEL FROM SER ${updatedCardInfo.likes}`);
-            card.updateLikesArea(updatedCardInfo.likes); //DONT'T WORK
+            card.updateLikesArea(updatedCardInfo.likes);
           })
           .catch((err) => {
             console.log(`Ошибка. Запрос не выполнен ${err.status}`);
@@ -118,43 +115,23 @@ function createCard(item) {
       },
 
       handleDeleteIconClick: (id) => {
-        const popupConfirm = new PopupWithSubmitDel(
-          ".popup_type_delete-card"
-          /*".closeBtn!!!!!!!!!!!!" */
-        );
-
-        //All Actions after popup will be open
-
         popupConfirm.setSubmitAction(() => {
-          const apiCards = new Api({
-            baseUrl: `https://mesto.nomoreparties.co/v1/cohort-15/cards/${id}`, //3
-            headers: {
-              authorization: "7ab42f4a-85b2-40b4-8955-f611d5ddf392",
-              "Content-Type": "application/json",
-            },
-          });
-
           apiCards
-            .removeCardFromServer()
-            .then((updatedDataWithoutCard) => {
-              console.log(`updatedDataWithoutCard ${updatedDataWithoutCard}`);
-              /*card.handleDeleteClosest(); */
-              popupConfirm.close();
-            })
+            .removeCardFromServer(id)
+            .then(() => card.handleDeleteClosest())
+            /*.then(() => delSubmitPopup.closePopup()) */
             .catch((err) => {
-              console.log(`Ошибка. Запрос не выполнен ${err.status}`);
+              renderError(`Ошибка: ${err}`);
             });
         });
 
-        popupConfirm.open();
-
-        /* ...что должно произойти при клике на удаление */
+        popupConfirm.open(); //WORK
       },
     },
     ".elements__element-template"
   );
 
-  const cardElement = card.generateCard(); //!!!!!!!!!!!!!!!
+  const cardElement = card.generateCard();
   //we have got here an upgraded element from generateCard() to insert it in Class List
   sectionList.addItem(cardElement);
 }
@@ -180,27 +157,46 @@ const popupAddCard = new PopupWithForm(
   ".popup_type_add-card"
 );
 
-/*
-const popupDeleteCard =
-popupDeleteCard.setEventListeners(); */
-
 //Open AddPopup and Check validity
 openAddCardButton.addEventListener("click", () => {
+  popupAddCard.returnNameOnSubmitButton();
   popupAddCard.open();
   cardFormValidator.popupFormReset();
 });
 //important: schould be made just one time (not putt this function in open Method) or will be exponential law with new cards x1x2x4....
 popupAddCard.setEventListeners();
 
-apiProfileInfo
-  .loadingProfileInfoFromServer()
-  .then((lastProfileValuesFromServer) => {
-    userInfo.getAndSetUserInfoFromServer(lastProfileValuesFromServer);
-  })
-  .catch((err) => {
-    console.log(`Ошибка. Запрос не выполнен ${err.status}`);
-  });
+//________________________ Open editAvatarPopup
 
+const popupChangeAvatar = new PopupWithForm(
+  {
+    handleSubmitForm: (formData) => {
+      apiProfileInfo
+        .addNewAvatarOnServer(formData.avatar) //another way
+        .then((updatedAvatarLink) => {
+          //insert profile on page METHOD
+          userInfo.setNewAvatarOnPage(updatedAvatarLink.avatar);
+        })
+        .catch((err) => {
+          console.log(
+            `Ошибка. Запрос не выполнен -  addNewAvatarOnServer ${err.status}`
+          );
+        });
+      popupChangeAvatar.close();
+    },
+  },
+  ".popup_type_edit-avatar-link"
+);
+
+avatarButton.addEventListener("click", () => {
+  popupChangeAvatar.returnNameOnSubmitButton();
+  popupChangeAvatar.open();
+  //make a validation
+  addNewAvatarValidator.popupFormReset();
+});
+popupChangeAvatar.setEventListeners();
+
+//_________________________
 //create an userInfo image of UserInfo Class to create a object with Profile values
 const userInfo = new UserInfo({
   userNameSelector: ".profile__title",
@@ -216,9 +212,16 @@ const popupEdit = new PopupWithForm(
     handleSubmitForm: (formData) => {
       //rewrite values from inputs on page
       userInfo.setUserInfo(formData.name, formData.job, formData.avatar);
-      apiProfileInfo.addNewProfileInfoOnServer(formData);
-      console.log(formData);
+      apiProfileInfo
+        .addNewProfileInfoOnServer(formData)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(
+            `Ошибка. Запрос не выполнен -  addNewAvatarOnServer ${err.status}`
+          );
+        });
 
+      popupAddCard.returnNameOnSubmitButton();
       popupEdit.close();
     },
   },
@@ -229,6 +232,7 @@ const popupEdit = new PopupWithForm(
 profileEditButton.addEventListener("click", () => {
   //make a validation
   editFormValidator.popupFormReset();
+  popupEdit.returnNameOnSubmitButton();
   //find an Object with the latest Profile values
   const currentUserInfo = userInfo.getUserInfo();
   //fill inputs with latest values feom object

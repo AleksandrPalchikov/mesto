@@ -40,6 +40,26 @@ class Api {
     });
   }
 
+  //Add New Avatar on Server via url:
+  addNewAvatarOnServer(formDataAvatarLink) {
+    return fetch(`${this._baseUrl}/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: formDataAvatarLink, ///here will be url
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        console.log(`Today addNewAvatarOnServer works, Bro ${res.status}`);
+        return res.json();
+      } else {
+        return Promise.reject(
+          `Что-то пошло не так - addNewAvatarOnServer: ${res.status}`
+        );
+      }
+    });
+  }
+
   //Get Cards
   getInitialCards() {
     return fetch(this._baseUrl, {
@@ -76,8 +96,8 @@ class Api {
   //_____________________________
   //Delete card from server
 
-  removeCardFromServer() {
-    return fetch(this._baseUrl, {
+  removeCardFromServer(id) {
+    return fetch(`${this._baseUrl}/${id}`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
@@ -90,15 +110,9 @@ class Api {
     });
   }
 
-  /*
-удалить карточку (DELETE)
-получить данные пользователя (GET)
-заменить данные пользователя (PATCH)
-заменить аватар (PATCH) */
-
   //Send New My Like on Server - "залайкать" карточку (PUT)
-  putNewLikeonServer() {
-    return fetch(this._baseUrl, {
+  putNewLikeonServer(id) {
+    return fetch(`${this._baseUrl}/likes/${id}`, {
       method: "PUT",
       headers: this._headers,
     }).then((res) => {
@@ -112,8 +126,8 @@ class Api {
   }
 
   //Delete My like from server - удалить лайк карточки (DELETE)
-  deleteMyLikeFromServer() {
-    return fetch(this._baseUrl, {
+  deleteMyLikeFromServer(id) {
+    return fetch(`${this._baseUrl}/likes/${id}`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {

@@ -14,7 +14,7 @@ class UserInfo {
     //NEU
     this._userName.textContent = lastProfileValuesFromServer.name;
     this._userDescription.textContent = lastProfileValuesFromServer.about;
-    this._userAvatar.src = lastProfileValuesFromServer.avatar;
+    this._userAvatar.style.backgroundImage = `url(${lastProfileValuesFromServer.avatar})`;
   }
   //return previous values from WebPage in inputs
   getUserInfo() {
@@ -30,11 +30,12 @@ class UserInfo {
   setUserInfo(name, job) {
     this._userName.textContent = name;
     this._userDescription.textContent = job;
-
     //send name and job on server
   }
 
-  sendNewInputsValuesOnServer() {}
+  setNewAvatarOnPage(avatar) {
+    this._userAvatar.style.backgroundImage = `url(${avatar})`;
+  }
 }
 
 export { UserInfo };

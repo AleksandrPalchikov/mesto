@@ -17,11 +17,23 @@ class PopupWithForm extends Popup {
     return this._formValues;
   }
 
+  _changeTheLoadButtonTitle() {
+    this._popup.querySelector(".popup__submit-button").textContent =
+      "Сохранение...";
+  }
+
+  returnNameOnSubmitButton() {
+    this._popup.querySelector(".popup__submit-button").textContent =
+      "Сохранить";
+  }
+
   //Find form to have an Abillity to make a submit - cll callback tosend all input values
   setEventListeners() {
     const anyPopupSubmitForm = this._popup.querySelector(".popup__form");
     anyPopupSubmitForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
+      this._changeTheLoadButtonTitle();
+      /*submitButtonCard.textContent = "Сохранение..."; */
       this._handleSubmitForm(this._getInputValues());
     });
     super.setEventListeners();

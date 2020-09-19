@@ -41,6 +41,8 @@ const popupBigImgFigCapture = popupOpenBigImg.querySelector(
 
 // Добавляем в DOM
 const cardList = document.querySelector(".elements__list");
+const popupEditAvatar = document.querySelector(".popup_type_edit-avatar-link");
+const avatarButton = document.querySelector(".profile__avatar");
 
 //Initial constants - FormValid class
 const popupClassesObject = {
@@ -73,4 +75,6 @@ export {
   popupBigImgFigCapture,
   cardList,
   popupClassesObject,
+  avatarButton,
+  popupEditAvatar,
 };
