@@ -3,6 +3,7 @@ class Card {
   constructor(
     {
       data,
+      profileData,
       handleCardclick,
       handleLikeClick,
       handleDeleteLikeClick,
@@ -16,6 +17,7 @@ class Card {
     this._handleDeleteLikeClick = handleDeleteLikeClick;
     this._handleDeleteIconClick = handleDeleteIconClick;
 
+    this._profileData = profileData;
     this._data = data;
     this._name = data.name;
     this._link = data.link;
@@ -72,22 +74,15 @@ class Card {
     cardImage.alt = this._name;
     cardTitle.textContent = this._name;
     this._setEventListeners();
-
     this.updateLikesArea(this._likeData);
     this._deleteButtonVisibility(); //hiden th trash element of card, that wasn't createn dy me
     return this._element; //Returning an upgraded element
   }
 
-  getAllProfileInfo(profileInfoFromServer) {
-    console.log(profileInfoFromServer);
-    console.log(profileInfoFromServer._id);
-    return (this._myId = profileInfoFromServer._id);
-  }
-
   //Make visible trash button JUST for my cards
   _deleteButtonVisibility() {
     const trashElementOfCard = this._element.querySelector(".elements__trash");
-    if (this._ownerId !== "fd6926d50c516142275b0660") {
+    if (this._ownerId !== this._profileData._id) {
       trashElementOfCard.classList.add("elements__trash-hidden");
     }
   }
@@ -95,7 +90,7 @@ class Card {
   //override value of LIKE. Hier Like Array is changing and Mew render is making with new values
   updateLikesArea(someLikeArray) {
     this._isLiked = someLikeArray.some((person) => {
-      return person._id === `fd6926d50c516142275b0660`;
+      return person._id === this._profileData._id;
     });
     this._renderLikesNumber(someLikeArray.length);
     this._renderLikeBtn(this._isLiked);
@@ -128,9 +123,7 @@ class Card {
 
   //Function that delete certain card. We need to put null this element, because this._element doesn't exist
   handleDeleteClosest() {
-    document.querySelector(".popup").classList.add(".popup_type_delete-card");
     this._element.remove();
-    this._element = null;
   }
 }
 

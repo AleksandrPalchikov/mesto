@@ -40,7 +40,7 @@ class Api {
     });
   }
 
-  getAllNeededData() {
+  getAppInfo() {
     return Promise.all([
       this.loadingProfileInfoFromServer(),
       this.getInitialCards(),
