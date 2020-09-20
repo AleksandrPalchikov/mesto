@@ -19,43 +19,26 @@ import { PopupWithSubmitDel } from "../components/PopupWithSubmitDel";
 import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 
-const apiProfileInfo = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-15/users/me", //1
+const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-15", //2
   headers: {
     authorization: "7ab42f4a-85b2-40b4-8955-f611d5ddf392",
     "Content-Type": "application/json",
   },
 });
-const apiCards = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-15/cards", //2
-  headers: {
-    authorization: "7ab42f4a-85b2-40b4-8955-f611d5ddf392",
-    "Content-Type": "application/json",
-  },
-});
-// Создаём массив с промисами
-const initialPromisesArray = [apiProfileInfo, apiCards];
-// Передаём массив с промисами методу Promise.all
-Promise.all(initialPromisesArray).then((results) => {});
 
-//Initial Array of cards from Server
-apiCards
-  .getInitialCards()
-  .then((cardsFromSerever) => {
+api
+  .getAllNeededData()
+  .then((allNeededInitialData) => {
+    const [profileInfoFromServer, initialCards] = allNeededInitialData;
+    userInfo.getAndSetUserInfoFromServer(profileInfoFromServer);
     //INCERTION CARD ALGORITHM from Array with images in a cardList - initial operation.
-    sectionList.renderInitialCards(cardsFromSerever);
+    sectionList.renderInitialCards(initialCards);
+    //My last id to make actions with like an delete just my card
+    /*card.getAllProfileInfo(profileInfoFromServer);  */
   })
   .catch((err) => {
-    console.log(`Ошибка. Запрос не выполнен ${err.status}`);
-  });
-//Initial ProfileInfo of cards from Server
-apiProfileInfo
-  .loadingProfileInfoFromServer()
-  .then((lastProfileValuesFromServer) => {
-    userInfo.getAndSetUserInfoFromServer(lastProfileValuesFromServer);
-  })
-  .catch((err) => {
-    console.log(`Ошибка. Запрос не выполнен ${err.status}`);
+    console.log(`Ошибка. Ты все уронил ${err.status}`);
   });
 
 //Creation of two new objects of FormValidator class for two popups with forms
@@ -99,7 +82,7 @@ function createCard(item) {
       },
       handleLikeClick: (id) => {
         //send PUT request on server
-        apiCards
+        api
           .putNewLikeonServer(id)
           .then((updatedCardInfo) => {
             card.updateLikesArea(updatedCardInfo.likes);
@@ -109,7 +92,7 @@ function createCard(item) {
           });
       },
       handleDeleteLikeClick: (id) => {
-        apiCards
+        api
           .deleteMyLikeFromServer(id)
           .then((updatedCardInfo) => {
             card.updateLikesArea(updatedCardInfo.likes);
@@ -118,11 +101,10 @@ function createCard(item) {
             console.log(`Ошибка. Запрос не выполнен ${err.status}`);
           });
       },
-
       handleDeleteIconClick: (id) => {
         popupConfirm.setEventListeners();
         popupConfirm.setSubmitAction(() => {
-          apiCards
+          api
             .removeCardFromServer(id)
             .then(() => card.handleDeleteClosest())
             .then(() => popupConfirm.close())
@@ -130,7 +112,6 @@ function createCard(item) {
               renderError(`Ошибка: ${err}`);
             });
         });
-
         popupConfirm.open();
       },
     },
@@ -147,7 +128,7 @@ const popupAddCard = new PopupWithForm(
   {
     handleSubmitForm: (formData) => {
       //Method to render just one card with inputs values
-      apiCards
+      api
         .addNewCardOnServer(formData)
         .then((newCardInfo) => {
           //INCERTION CARD ALGORITHM from Array with images in a cardList from server - initial operation.
@@ -172,13 +153,12 @@ openAddCardButton.addEventListener("click", () => {
 //important: schould be made just one time (not putt this function in open Method) or will be exponential law with new cards x1x2x4....
 popupAddCard.setEventListeners();
 
-//________________________ Open editAvatarPopup
-
+//Open editAvatarPopup
 const popupChangeAvatar = new PopupWithForm(
   {
     handleSubmitForm: (formData) => {
-      apiProfileInfo
-        .addNewAvatarOnServer(formData.avatar) //another way
+      api
+        .addNewAvatarOnServer(formData.avatar)
         .then((updatedAvatarLink) => {
           //insert profile on page METHOD
           userInfo.setNewAvatarOnPage(updatedAvatarLink.avatar);
@@ -202,7 +182,6 @@ avatarButton.addEventListener("click", () => {
 });
 popupChangeAvatar.setEventListeners();
 
-//_________________________
 //create an userInfo image of UserInfo Class to create a object with Profile values
 const userInfo = new UserInfo({
   userNameSelector: ".profile__title",
@@ -218,7 +197,7 @@ const popupEdit = new PopupWithForm(
     handleSubmitForm: (formData) => {
       //rewrite values from inputs on page
       userInfo.setUserInfo(formData.name, formData.job, formData.avatar);
-      apiProfileInfo
+      api
         .addNewProfileInfoOnServer(formData)
         .then((res) => {})
         .catch((err) => {
@@ -226,8 +205,7 @@ const popupEdit = new PopupWithForm(
             `Ошибка. Запрос не выполнен -  addNewAvatarOnServer ${err.status}`
           );
         });
-
-      popupAddCard.returnNameOnSubmitButton();
+      /*  popupAddCard.returnNameOnSubmitButton();*/
       popupEdit.close();
     },
   },

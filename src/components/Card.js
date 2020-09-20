@@ -22,6 +22,7 @@ class Card {
     this._likeData = data.likes;
     this._cardId = data._id;
     this._ownerId = data.owner._id; //Prove it // Owner of Card NEU to delete the trash element
+    /*this._myID =  */
   }
 
   // set Listeners inside the every card from Template or for NewCard
@@ -77,6 +78,12 @@ class Card {
     return this._element; //Returning an upgraded element
   }
 
+  getAllProfileInfo(profileInfoFromServer) {
+    console.log(profileInfoFromServer);
+    console.log(profileInfoFromServer._id);
+    return (this._myId = profileInfoFromServer._id);
+  }
+
   //Make visible trash button JUST for my cards
   _deleteButtonVisibility() {
     const trashElementOfCard = this._element.querySelector(".elements__trash");
@@ -88,7 +95,7 @@ class Card {
   //override value of LIKE. Hier Like Array is changing and Mew render is making with new values
   updateLikesArea(someLikeArray) {
     this._isLiked = someLikeArray.some((person) => {
-      return person._id === "fd6926d50c516142275b0660";
+      return person._id === `fd6926d50c516142275b0660`;
     });
     this._renderLikesNumber(someLikeArray.length);
     this._renderLikeBtn(this._isLiked);

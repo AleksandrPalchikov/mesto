@@ -6,7 +6,7 @@ class Api {
 
   //Loading user info from Server
   loadingProfileInfoFromServer() {
-    return fetch(this._baseUrl, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._headers,
     }).then((res) => {
@@ -23,7 +23,7 @@ class Api {
 
   //Patch updated user info on Server
   addNewProfileInfoOnServer(formData) {
-    return fetch(this._baseUrl, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
@@ -40,9 +40,16 @@ class Api {
     });
   }
 
+  getAllNeededData() {
+    return Promise.all([
+      this.loadingProfileInfoFromServer(),
+      this.getInitialCards(),
+    ]);
+  }
+
   //Add New Avatar on Server via url:
   addNewAvatarOnServer(formDataAvatarLink) {
-    return fetch(`${this._baseUrl}/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
@@ -62,7 +69,7 @@ class Api {
 
   //Get Cards
   getInitialCards() {
-    return fetch(this._baseUrl, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
       headers: this._headers,
     }).then((res) => {
@@ -76,7 +83,7 @@ class Api {
   }
   //Add New Card
   addNewCardOnServer(formData) {
-    return fetch(this._baseUrl, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
@@ -93,11 +100,8 @@ class Api {
     });
   }
 
-  //_____________________________
-  //Delete card from server
-
   removeCardFromServer(id) {
-    return fetch(`${this._baseUrl}/${id}`, {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
@@ -112,7 +116,7 @@ class Api {
 
   //Send New My Like on Server - "залайкать" карточку (PUT)
   putNewLikeonServer(id) {
-    return fetch(`${this._baseUrl}/likes/${id}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: "PUT",
       headers: this._headers,
     }).then((res) => {
@@ -127,7 +131,7 @@ class Api {
 
   //Delete My like from server - удалить лайк карточки (DELETE)
   deleteMyLikeFromServer(id) {
-    return fetch(`${this._baseUrl}/likes/${id}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
